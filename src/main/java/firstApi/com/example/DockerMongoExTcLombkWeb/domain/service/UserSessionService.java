@@ -1,5 +1,7 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.apicontroller;
+package firstApi.com.example.DockerMongoExTcLombkWeb.domain.service;
 
+import firstApi.com.example.DockerMongoExTcLombkWeb.domain.UserSession;
+import firstApi.com.example.DockerMongoExTcLombkWeb.domain.repository.UserSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

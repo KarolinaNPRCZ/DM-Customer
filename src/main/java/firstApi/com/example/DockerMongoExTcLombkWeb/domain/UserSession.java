@@ -1,4 +1,4 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.apicontroller;
+package firstApi.com.example.DockerMongoExTcLombkWeb.domain;
 
 import java.util.List;
 

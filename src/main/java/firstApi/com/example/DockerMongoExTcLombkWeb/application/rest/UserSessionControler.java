@@ -1,7 +1,6 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.apicontroller;
+package firstApi.com.example.DockerMongoExTcLombkWeb.application.rest;
 
-import netscape.javascript.JSObject;
-import org.bson.json.JsonObject;
+import firstApi.com.example.DockerMongoExTcLombkWeb.domain.UserSession;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import java.util.List;
 @CrossOrigin
 public class UserSessionControler {
     @Autowired
-    private firstApi.com.example.DockerMongoExTcLombkWeb.apicontroller.UserSessionService UserSessionService;
+    private firstApi.com.example.DockerMongoExTcLombkWeb.domain.service.UserSessionService UserSessionService;
 
 
     @GetMapping
