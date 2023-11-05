@@ -5,31 +5,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("Product")
 public class Product {
-
-
-    private String name;
-    private int qunatity;
-    private String category;
     @Id
     private String id;
 
-    public Product(String id, String name, int qunatity,String category){
+    private String name;
+    private int quantity;
+    private String category;
+
+
+    public Product(String id, String name, int quantity, String category){
         super();
         this.id = id;
         this.name = name;
-        this.qunatity = qunatity;
+        this.quantity = quantity;
         this.category = category;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                ", id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", qunatity=" + qunatity +
-                ", category='" + category + '\'' +
-                '}';
-    }
 
     public String getName() {
         return name;
@@ -39,12 +30,12 @@ public class Product {
         this.name = name;
     }
 
-    public int getQunatity() {
-        return qunatity;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQunatity(int qunatity) {
-        this.qunatity = qunatity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public String getCategory() {
@@ -62,4 +53,6 @@ public class Product {
     public void setId(String id) {
         this.id = id;
     }
+
+
 }
