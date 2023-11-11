@@ -1,34 +1,54 @@
 package firstApi.com.example.DockerMongoExTcLombkWeb.domain;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
+@Table(name = "users")
+
 public class UserSession {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    private String id;
-    private List<String> conversation;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "password")
+    private String password;
 
-    public UserSession(String id, List conversation){
+
+    public void setId(long id) {
         this.id = id;
-        this.conversation = conversation;
-    }
-    public void updateConversation(String newEntry){
-        this.conversation.add(newEntry);
-
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getName() {
+        return name;
     }
 
-    public List<String> getConversation() {
-        return conversation;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setConversation(List<String> conversation) {
-        this.conversation = conversation;
+    public String getPassword() {
+        return password;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private UserSession() {
+    }
+
+    public UserSession(String name, String password) {
+
+        this.name = name;
+        this.password = password;
+    }
+
 }

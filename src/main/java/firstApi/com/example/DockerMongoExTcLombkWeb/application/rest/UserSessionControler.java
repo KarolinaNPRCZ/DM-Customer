@@ -1,6 +1,7 @@
 package firstApi.com.example.DockerMongoExTcLombkWeb.application.rest;
 
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.UserSession;
+import firstApi.com.example.DockerMongoExTcLombkWeb.domain.repository.UserSessionRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,42 +13,42 @@ import java.util.List;
 @RequestMapping("/api")
 @CrossOrigin
 public class UserSessionControler {
-    @Autowired
-    private firstApi.com.example.DockerMongoExTcLombkWeb.domain.service.UserSessionService UserSessionService;
 
+        @Autowired
+        private UserSessionRepository userSessionRepository;
 
-    @GetMapping
-    public List<UserSession> findAll() {
-        return UserSessionService.findAll();
+        @GetMapping
+        public List<UserSession> getAllUserSessions() {
+            return userSessionRepository.findAll();
+        }
+
+        @GetMapping("/{id}")
+        public UserSession getUserSessionById(@PathVariable Long id) {
+            return userSessionRepository.findById(id).get();
+        }
+
+        @PostMapping
+        public UserSession createUserSession(@RequestBody UserSession user) {
+            return userSessionRepository.save(user);
+        }
+
+        @PutMapping("/{id}")
+        public UserSession updateUserSession(@PathVariable Long id, @RequestBody UserSession user) {
+            UserSession existingUserSession = userSessionRepository.findById(id).get();
+            existingUserSession.setName(user.getName());
+            existingUserSession.setPassword(user.getPassword());
+            return userSessionRepository.save(existingUserSession);
+        }
+
+        @DeleteMapping("/{id}")
+        public String deleteUserSession(@PathVariable Long id) {
+            try {
+                userSessionRepository.findById(id).get();
+                userSessionRepository.deleteById(id);
+                return "UserSession deleted successfully";
+            } catch (Exception e) {
+                return "UserSession not found";
+            }
+        }
     }
 
-    @GetMapping("/{id}")
-    public UserSession findById(@PathVariable String id) {
-        return UserSessionService.findById(id);
-    }
-
-    @PostMapping
-    public UserSession create(@RequestBody UserSession userSession) {
-        return UserSessionService.save(userSession);
-    }
-
-    @PutMapping("/{id}")
-    public String update(@RequestBody String messageFromFrontend, @PathVariable String id) throws IOException, InterruptedException {
-
-        // set conversation from frontend
-        UserSessionService.update(id, messageFromFrontend.replaceAll("\"", ""));
-        System.out.println(messageFromFrontend);
-
-        // save answer to db
-        UserSessionService.update(id, "answer");
-
-        // return answer to frontend
-        return JSONObject.quote("answer");
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable String id) {
-        UserSessionService.deleteById(id);
-    }
-
-}
