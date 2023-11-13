@@ -2,8 +2,8 @@ package firstApi.com.example.DockerMongoExTcLombkWeb;
 
 
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.Product;
+import firstApi.com.example.DockerMongoExTcLombkWeb.domain.UserSession;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.repository.CustomProductRepository;
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.repository.CustomProductRepositoryImpl;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,7 +11,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 @EnableMongoRepositories
@@ -22,8 +25,12 @@ public class DockerMongoExTcLombkWebApplication implements CommandLineRunner {//
     @Autowired
     CustomProductRepository customProductRepository;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         SpringApplication.run(DockerMongoExTcLombkWebApplication.class, args);
+
+        UserSessionDAO userSessionDAO = new UserSessionDAOImpl();
+        Optional<UserSession> userSession = userSessionDAO.getUserSessionById(2L);
+        System.out.println(userSession);
 
     }
 
