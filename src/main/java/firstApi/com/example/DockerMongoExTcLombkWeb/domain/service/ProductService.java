@@ -16,7 +16,7 @@ public class ProductService {
     public List<Product> findAll(){
         return productRepository.findAll();
     }
-    public Product findById(String id){
+    public Product findById(int id){
         if (productRepository.findById(id).isEmpty()){
             return null;
         }
@@ -44,10 +44,10 @@ public class ProductService {
         return productRepository.findProdutcsName(name);
     }
 
-    public void update(String id, Product product) {//if put for id is "" in db create new prodct
+    public void update(int id, Product product) {//if put for id is "" in db create new prodct
         for (Product product1 : productRepository.findAll()){
-            if (product1.getId().equals(id)){
-                if (product.getId().isBlank()){
+            if (product1.getId() == id){
+                if (product.getId() == 0){
                     product1.setId(id);
                 }else {
                     product1.setId(product.getId());
@@ -58,7 +58,7 @@ public class ProductService {
             }
         }
     }
-    public void deleteById(String id) {
+    public void deleteById(int id) {
         productRepository.deleteById(id);
     }
 }

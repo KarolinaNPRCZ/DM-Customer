@@ -6,15 +6,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("Product")
 public class Product {
     @Id
-    private String id;
+    private int id;
 
     private String name;
     private int quantity;
     private String category;
 
 
-    public Product(String id, String name, int quantity, String category){
-        super();
+    public Product(int id,String name, int quantity, String category){
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -46,11 +45,11 @@ public class Product {
         this.category = category;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

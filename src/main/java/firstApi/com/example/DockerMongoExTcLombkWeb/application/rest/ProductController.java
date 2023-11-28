@@ -23,7 +23,7 @@ public class ProductController {
     }
 
       @GetMapping("/{id}")
-      public Product findById(@PathVariable String id){
+      public Product findById(@PathVariable int id){
           return productService.findById(id);
       }
     @GetMapping("/search/category/{category}")
@@ -39,14 +39,14 @@ public class ProductController {
         return productService.save(product);
     }
     @PutMapping("/{id}")
-    public Product updateProductById(@PathVariable String id,@RequestBody Product product){
+    public Product updateProductById(@PathVariable int id,@RequestBody Product product){
       productService.update(id, product);
 
        return productService.save(product);
 
     }
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable String id){
+    public void deleteById(@PathVariable int id){
         productService.deleteById(id);
     }
 

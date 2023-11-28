@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
-public interface ProductRepository extends MongoRepository<Product,String> {
+public interface ProductRepository extends MongoRepository<Product,Integer> {
    @Query("{name:'?0'}")
    Product findProdutcsName(String name);
 

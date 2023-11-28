@@ -45,18 +45,18 @@ public class DockerMongoExTcLombkWebApplication implements CommandLineRunner {//
         updateCategoryName("Phone");//works
 
         updateProduct("Works",40);
-        deleteProduct("Iph");
+     //   deleteProduct("Iph");
 
     }
 
     void createProduct() {//Create products
         System.out.println("Data creation started....");
-        productRepository.save(new Product("Iph", "65", 5, "Phone"));
+      /*  productRepository.save(new Product("Iph", "65", 5, "Phone"));
         productRepository.save(new Product("Iphe", "Works", 55, "Phone"));
         productRepository.save(new Product("Dell", "Latidute", 4, "Laptop"));
         productRepository.save(new Product("Acer", "Aspire", 3, "Laptop"));
         productRepository.save(new Product("Iphone", "15", 5, "Phone"));
-        productRepository.save(new Product("Samsung", "TAB7", 5, "Tablet"));
+        productRepository.save(new Product("Samsung", "TAB7", 5, "Tablet"));*/
         System.out.println("Data creation complete");
     }
 //show all data
@@ -117,7 +117,7 @@ public class DockerMongoExTcLombkWebApplication implements CommandLineRunner {//
         customProductRepository.updateProductQuantity(name,newQuantity);
     }
     //delete item
-    public void deleteProduct(String id){
+    public void deleteProduct(int id){
         productRepository.deleteById(id);
         System.out.println("Item with id " + id +" deleted...");;
     }
