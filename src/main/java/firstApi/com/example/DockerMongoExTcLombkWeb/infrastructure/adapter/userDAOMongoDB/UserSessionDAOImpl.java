@@ -1,4 +1,4 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb;
+package firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.adapter.userDAOMongoDB;
 
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.UserSession;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.repository.UserSessionRepository;

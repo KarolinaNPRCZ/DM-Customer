@@ -5,13 +5,14 @@ import firstApi.com.example.DockerMongoExTcLombkWeb.domain.Product;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.UserSession;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.repository.CustomProductRepository;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.repository.ProductRepository;
+import firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.adapter.userDAOMongoDB.UserSessionDAO;
+import firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.adapter.userDAOMongoDB.UserSessionDAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
