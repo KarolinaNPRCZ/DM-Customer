@@ -17,7 +17,6 @@ public interface ProductControllerPort<RP, RQ> {
 
     public RP updateProductById(int id, RP rq);
 
-    public void deleteById(int id);
 
 
 }
