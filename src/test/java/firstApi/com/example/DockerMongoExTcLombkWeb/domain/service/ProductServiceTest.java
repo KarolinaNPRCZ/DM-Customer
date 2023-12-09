@@ -1,6 +1,6 @@
 package firstApi.com.example.DockerMongoExTcLombkWeb.domain.service;
 
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.infrastructure.ProductRepository;
+import product.infrastructure.ProductRepository;
 import org.junit.jupiter.api.Test;
 
 class ProductServiceTest {

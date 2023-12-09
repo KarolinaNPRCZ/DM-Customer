@@ -1,7 +1,7 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.infrastructure.productDAOJPA;
+package product.infrastructure.productDAOJPA;
 
 
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.domain.core.Product;
+import product.domain.core.Product;
 
 import java.util.function.Function;
 

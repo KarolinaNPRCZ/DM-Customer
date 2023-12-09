@@ -1,7 +1,7 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.infrastructure.productDAOJPA;
+package product.infrastructure.productDAOJPA;
 
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.port.ProductDAOPort;
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.infrastructure.ProductRepository;
+import product.port.ProductDAOPort;
+import product.infrastructure.ProductRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

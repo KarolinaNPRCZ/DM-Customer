@@ -1,7 +1,7 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.infrastructure;
+package product.infrastructure;
 
 import com.mongodb.client.result.UpdateResult;
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.domain.core.Product;
+import product.domain.core.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

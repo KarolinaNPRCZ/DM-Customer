@@ -10,7 +10,7 @@ public  class UserMapper {
     }
 
     public static User updateEntity(UserDTO dto) {
-
-        return new User(dto.id(), dto.name(), dto.password());
+        System.out.println("to ja user mapper");
+        return new User( dto.name(), dto.password());//dto.id(),
     }
 }

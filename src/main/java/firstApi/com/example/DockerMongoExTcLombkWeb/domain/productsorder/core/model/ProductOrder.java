@@ -1,6 +1,6 @@
 package firstApi.com.example.DockerMongoExTcLombkWeb.domain.productsorder.core.model;
 
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.domain.core.Product;
+import product.domain.core.Product;
 
 import java.time.LocalDateTime;
 import java.util.List;

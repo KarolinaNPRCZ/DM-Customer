@@ -1,6 +1,6 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.port;
+package product.port;
 
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.infrastructure.productDAOJPA.ProductDTO;
+import product.infrastructure.productDAOJPA.ProductDTO;
 
 import java.util.List;
 

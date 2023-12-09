@@ -1,4 +1,4 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.domain.core;
+package product.domain.core;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

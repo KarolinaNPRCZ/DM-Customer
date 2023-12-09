@@ -1,7 +1,7 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.application;
+package product.application;
 
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.domain.core.Product;
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.domain.ports.out.ProductService;
+import product.domain.core.Product;
+import product.domain.ports.out.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

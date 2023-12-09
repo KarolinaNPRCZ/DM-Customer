@@ -1,6 +1,5 @@
 package firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure;
 
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.ports.in.UserControllerPort;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.ports.out.UserDB;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.ports.out.UserFacade;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.infrastructure.UserRepository;
@@ -13,7 +12,7 @@ public class UserConfig {
             return new UserDAOImpl(userRepository);
         }
         @Bean
-        public UserControllerPort UserControllerPort(UserDB userDatabase){
+        public UserFacade UserControllerPort(UserDB userDatabase){
             return new UserFacade(userDatabase);
         }
     }

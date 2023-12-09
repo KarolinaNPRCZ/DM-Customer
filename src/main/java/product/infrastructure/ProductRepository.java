@@ -1,6 +1,6 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.infrastructure;
+package product.infrastructure;
 
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.domain.core.Product;
+import product.domain.core.Product;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

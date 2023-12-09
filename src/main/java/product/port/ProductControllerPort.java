@@ -1,4 +1,4 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.domain.product.port;
+package product.port;
 
 import java.util.List;
 
