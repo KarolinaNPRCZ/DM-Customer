@@ -3,7 +3,7 @@ package firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.ports.out.UserDB;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.ports.out.UserFacade;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.infrastructure.UserRepository;
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.infrastructure.userDAOMongoDB.UserDAOImpl;
+import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.infrastructure.userDAOPostgresDB.UserDAOImpl;
 import org.springframework.context.annotation.Bean;
 
 

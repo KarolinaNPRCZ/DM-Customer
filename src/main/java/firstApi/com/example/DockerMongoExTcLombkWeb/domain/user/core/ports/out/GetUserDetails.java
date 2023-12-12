@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface GetUserDetails {
-    User getUserById(Long id);
+  User getUserByEmail(String email);
 }

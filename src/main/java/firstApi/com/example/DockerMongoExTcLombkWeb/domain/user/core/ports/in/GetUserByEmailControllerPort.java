@@ -5,5 +5,5 @@ import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.model.UserD
 
 //create new User
 public interface GetUserByEmailControllerPort<T> {
-    T createUser(UserDTO userDTO);
+    T getUserByEmail(String email);
 }

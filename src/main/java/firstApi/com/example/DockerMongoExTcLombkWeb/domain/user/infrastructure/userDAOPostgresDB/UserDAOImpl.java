@@ -1,4 +1,4 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.infrastructure.userDAOMongoDB;
+package firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.infrastructure.userDAOPostgresDB;
 
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.model.User;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.model.UserDTO;
