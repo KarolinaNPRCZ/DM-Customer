@@ -1,7 +1,10 @@
 package firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.model;
 
 import firstApi.com.example.DockerMongoExTcLombkWeb.GenericConverter;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public  class UserMapper {
 
 
@@ -10,7 +13,7 @@ public  class UserMapper {
     }
 
     public static User updateEntity(UserDTO dto) {
-        System.out.println("to ja user mapper");
-        return new User( dto.name(), dto.password());//dto.id(),
+        log.info("to ja mapper");
+        return new User( dto.email(), dto.password());
     }
 }

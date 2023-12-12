@@ -13,16 +13,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @EqualsAndHashCode.Exclude
     private long id;
-    @Column(name = "name")
-    private String name;
     @Column(name = "email")
     private String email;
     @Column(name = "password")
     private String password;
 
-    public User( String name, String password) {
-       // long id,this.id = id;
-        this.name = name;
+    public User( String email, String password) {
+        this.email = email;
         this.password = password;
     }
     public User() {

@@ -5,9 +5,10 @@ import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.model.UserD
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.model.UserId;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.model.UserMapper;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.ports.in.UserControllerPort;
+import lombok.extern.log4j.Log4j2;
 
 import static firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.model.UserMapper.createFromDTO;
-
+@Log4j2
 public class UserFacade implements UserService {
 
     private final UserDB userDB;
@@ -19,8 +20,7 @@ public class UserFacade implements UserService {
 
     @Override
     public UserId createUser(UserDTO userDTO) {
-        System.out.println("to ja user fasada");
-      //
+        log.info("to ja facade");
         return userDB.save(userDTO);
     }
 }

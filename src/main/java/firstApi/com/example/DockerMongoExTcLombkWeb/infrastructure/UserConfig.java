@@ -6,13 +6,21 @@ import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.infrastructure.U
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.infrastructure.userDAOMongoDB.UserDAOImpl;
 import org.springframework.context.annotation.Bean;
 
+
 public class UserConfig {
-        @Bean
-        public UserDB userDatabase(UserRepository userRepository){
-            return new UserDAOImpl(userRepository);
-        }
-        @Bean
-        public UserFacade UserControllerPort(UserDB userDatabase){
-            return new UserFacade(userDatabase);
-        }
+    @Bean
+    public UserDB userDatabase(UserRepository userRepository) {
+        return new UserDAOImpl(userRepository);
     }
+
+    @Bean
+    public UserFacade UserControllerPort(UserDB userDatabase) {
+        return new UserFacade(userDatabase);
+    }
+
+
+/*    spring.security.user.name= user
+    spring.security.user.password= password
+    spring.security.user.roles= USER*/
+
+}

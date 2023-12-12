@@ -5,10 +5,11 @@ import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.model.UserD
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.model.UserId;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.ports.out.UserDB;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.infrastructure.UserRepository;
+import lombok.extern.log4j.Log4j2;
 
 import static firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.core.model.UserMapper.createFromDTO;
-
-public class UserDAOImpl implements UserDAO, UserDB {
+@Log4j2
+public class UserDAOImpl implements UserDB {
 
     private final UserRepository userRepository;
 
@@ -18,7 +19,8 @@ public class UserDAOImpl implements UserDAO, UserDB {
 
     @Override
     public UserId save(UserDTO userDTO) {
-        System.out.println("to ja dao impl");
+        log.info("to ja daoimppl");
+
         User user = createFromDTO(userDTO);
         User savedUser = userRepository.save(user);
         return new UserId(savedUser.getId());
