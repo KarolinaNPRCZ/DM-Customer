@@ -16,4 +16,13 @@ public  class UserMapper {
         log.info("to ja mapper");
         return new User( dto.email(), dto.password());
     }
+
+    public static UserDTO createFromEntity(User user) {
+        return updateDTO(user);
+    }
+
+    public static UserDTO updateDTO(User user) {
+        log.info("to ja mapper");
+        return new UserDTO(user.getEmail(), user.getPassword());
+    }
 }

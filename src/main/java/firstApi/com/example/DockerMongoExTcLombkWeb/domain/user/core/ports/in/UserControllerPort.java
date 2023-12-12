@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 //create new User
 public interface UserControllerPort<T> {
     T createUser(UserDTO userDTO);
+    T getUserByEmail(String email);
 }

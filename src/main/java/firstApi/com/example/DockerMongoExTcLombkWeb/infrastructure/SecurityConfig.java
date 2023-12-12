@@ -1,32 +1,21 @@
 package firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
 public class SecurityConfig {
-
-
-  /*  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        http
-                .authorizeHttpRequests((authorize) -> authorize
-                        .anyRequest().authenticated()
-                )
-                .httpBasic(withDefaults())
-                .formLogin(withDefaults()).csrf().disable();;
-
-        return http.build();
-    }*/
-
-
-
-  /*  public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user = User.builder()
-                .username("user")
-                .password(encoder().encode("password"))
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user);
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.csrf().disable()
+                .authorizeHttpRequests()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
+        return httpSecurity.build();
     }
-
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }*/
 }
+
