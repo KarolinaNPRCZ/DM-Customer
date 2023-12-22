@@ -16,8 +16,9 @@ public class UserLoginAndSignUpFacade implements UserService {
     }
 
     @Override
-    public UserId createUser(UserDTO userDTO) throws UserEmailArledyExistsException {
-        log.info("to ja facade");
+    public UserId createUser(String userEmail,String password) throws UserEmailArledyExistsException {
+        UserDTO userDTO = UserDTO.builder().email(userEmail).password(password).build();
+        log.info("Facade -> Trying to create user");
         return userDAOPort.save(userDTO);
 
     }

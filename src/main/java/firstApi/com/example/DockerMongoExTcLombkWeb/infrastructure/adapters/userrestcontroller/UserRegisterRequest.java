@@ -9,23 +9,24 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Getter
 @AllArgsConstructor
-//TODO make this class not public
-public class UserRegisterRequest {
-    @NotNull
-    @NotBlank
-    @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+ class UserRegisterRequest {
+    @NotNull(message = "{not.null}")
+    @NotBlank(message = "{not.blank}")
+    @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",message = "{wrong.value}")
     String UserEmail;
-    @NotNull
-    @NotBlank
-    @Size(min = 8)
+
+    @NotNull(message = "{not.null}")
+    @NotBlank(message = "{not.blank}")
+    @Size(min = 8,message = "{wrong.size}}")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{8,}$",
-            message = "Password must contains at least one digit, one letter and can't contains whitespace characters")
+            message = "{wrong.password}")
     String userPassword;
 
-    @NotBlank(message = "Confirm Password is reqired")
+    @NotNull(message = "{not.null}")
+    @NotBlank(message = "{not.blank}")
     private String confirmUserPassword;
 
-    @AssertTrue(message = "Passwords are not the same")
+    @AssertTrue(message = "{not.equal}")
     public boolean isUserPasswordConfirmed() {
         return userPassword.equals(confirmUserPassword);
     }

@@ -21,16 +21,15 @@ public class UserLoginAndSignUpController implements UserLoginAndSignUpControlle
         this.userService = userService;
     }
 
-    //TODO password encoder,handle validation,UserRegisterReQ to DTO in other class facade?
+    //TODO password encoder
     @PostMapping()
     @Override
     public ResponseEntity<UserId> createUser(@Valid @RequestBody UserRegisterRequest UserRegisterRequest) {
-        log.info("to ja controller");
-        UserDTO userDTO = new UserDTO(UserRegisterRequest.getUserEmail(), UserRegisterRequest.getUserPassword());
+        log.info("Handle Request = UserLoginAndSignUpController");
 
         //   String passwordAfterEncode = passwordEncoder.encode(userDTO.password());
         //  userDTO.toBuilder().password(passwordAfterEncode);
-        UserId register = userService.createUser(userDTO);
+        UserId register = userService.createUser(UserRegisterRequest.getUserEmail(), UserRegisterRequest.getUserPassword());
         return ResponseEntity.status(HttpStatus.CREATED).body(register);
 
     }

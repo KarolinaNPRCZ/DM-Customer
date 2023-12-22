@@ -1,7 +1,7 @@
 package firstApi.com.example.DockerMongoExTcLombkWeb;
 
 
-import firstApi.com.example.DockerMongoExTcLombkWeb.application.UserLoginAndSignUpFacadeConfig;
+import firstApi.com.example.DockerMongoExTcLombkWeb.application.userloginandsingup.UserLoginAndSignUpFacadeConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
