@@ -3,7 +3,9 @@ package firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.adapters.use
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,11 +20,11 @@ class User {
     private String userEmail;
     @Column(name = "userPassword")
     private String userPassword;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "userRoles",
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
-    private Set<UserRole> roles = new HashSet<>();
+    private List<UserRole> roles = new ArrayList<>();
 
     public User(String userEmail, String userPassword) {
         this.userEmail = userEmail;

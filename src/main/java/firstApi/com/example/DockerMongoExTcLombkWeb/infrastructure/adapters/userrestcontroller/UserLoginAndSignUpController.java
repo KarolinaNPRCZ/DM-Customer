@@ -22,7 +22,8 @@ public class UserLoginAndSignUpController implements UserLoginAndSignUpControlle
     }
 
     //TODO password encoder
-    @PostMapping()
+    @PostMapping("/register")
+
     @Override
     public ResponseEntity<UserId> createUser(@Valid @RequestBody UserRegisterRequest UserRegisterRequest) {
         log.info("Handle Request = UserLoginAndSignUpController");

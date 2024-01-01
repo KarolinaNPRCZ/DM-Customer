@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "roles")
 @NoArgsConstructor
@@ -20,8 +22,11 @@ class UserRole {
 
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "userRoleName")
     private Role name;
+
+
+    @ManyToMany(mappedBy = "roles")
+    private List<User> users;
 
 
 

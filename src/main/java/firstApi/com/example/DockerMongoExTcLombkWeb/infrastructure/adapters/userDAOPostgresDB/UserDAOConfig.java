@@ -12,8 +12,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  class UserDAOConfig {
 
     @Bean
-    UserDAOPort userDAOImpl(UserRepository userRepository, UserDTOMapper userDTOMapper, UserMapper userMapper) {
-        return new UserDAOImpl(userRepository,userDTOMapper, userMapper);
+    UserDAOPort userDAOImpl(UserRepository userRepository, UserDTOMapper userDTOMapper, UserMapper userMapper,UserRoleRepository userRoleRepository) {
+        return new UserDAOImpl(userRepository,userDTOMapper, userMapper,userRoleRepository);
     }
 
 }
