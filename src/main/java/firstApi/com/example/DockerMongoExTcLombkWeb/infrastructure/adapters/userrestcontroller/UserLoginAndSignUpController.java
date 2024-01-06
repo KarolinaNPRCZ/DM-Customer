@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,22 +16,20 @@ import org.springframework.web.bind.annotation.*;
 @Log4j2
 public class UserLoginAndSignUpController implements UserLoginAndSignUpControllerPort<ResponseEntity<?>,UserRegisterRequest> {
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public UserLoginAndSignUpController(UserService userService) {
+    public UserLoginAndSignUpController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    //TODO password encoder
     @PostMapping("/register")
 
     @Override
     public ResponseEntity<UserId> createUser(@Valid @RequestBody UserRegisterRequest UserRegisterRequest) {
         log.info("Handle Request = UserLoginAndSignUpController");
-
-        //   String passwordAfterEncode = passwordEncoder.encode(userDTO.password());
-        //  userDTO.toBuilder().password(passwordAfterEncode);
-        UserId register = userService.createUser(UserRegisterRequest.getUserEmail(), UserRegisterRequest.getUserPassword());
+        UserId register = userService.createUser(UserRegisterRequest.getUserEmail(), passwordEncoder.encode(UserRegisterRequest.getUserPassword()));
         return ResponseEntity.status(HttpStatus.CREATED).body(register);
 
     }

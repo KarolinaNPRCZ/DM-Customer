@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 @Log4j2
 @Service
- class UserMapper implements Function<UserDTO,User> {
+ class UserEntityMapper implements Function<UserDTO,User> {
 
 
     @Override

@@ -1,13 +1,13 @@
 package firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.DTO;
 
 public class UserId {
-    private final long id;
+    private final Integer id;
 
-    public UserId(long id) {
+    public UserId(Integer id) {
         this.id = id;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 }

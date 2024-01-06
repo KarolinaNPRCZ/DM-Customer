@@ -1,12 +1,11 @@
 package firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.adapters.userDAOPostgresDB;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -15,8 +14,8 @@ import java.util.Set;
 class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    @Column(name = "userEmail",unique = true)
+    private Integer id;
+    @Column(name = "userEmail", unique = true)
     private String userEmail;
     @Column(name = "userPassword")
     private String userPassword;
@@ -26,11 +25,15 @@ class User {
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     private List<UserRole> roles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
+
+
     public User(String userEmail, String userPassword) {
         this.userEmail = userEmail;
         this.userPassword = userPassword;
     }
 
-     protected User() {
+    protected User() {
     }
 }
