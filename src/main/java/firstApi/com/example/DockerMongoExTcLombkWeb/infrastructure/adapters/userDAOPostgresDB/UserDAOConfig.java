@@ -14,9 +14,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
     UserDAOPort userDAOImpl(UserRepository userRepository, UserDTOMapper userDTOMapper, UserEntityMapper userEntityMapper, UserRoleRepository userRoleRepository) {
         return new UserDAOImpl(userRepository,userDTOMapper, userEntityMapper,userRoleRepository);
     }
-    @Bean
-    UserTokenServiceImpl userTokenService(TokenRepository tokenRepository,TokenDTOMapper tokenDTOMapper,TokenEntityMapper tokenEntityMapper,UserEntityMapper userEntityMapper){
-        return new UserTokenServiceImpl(tokenRepository,tokenDTOMapper, tokenEntityMapper, userEntityMapper);
-    }
+
 
 }

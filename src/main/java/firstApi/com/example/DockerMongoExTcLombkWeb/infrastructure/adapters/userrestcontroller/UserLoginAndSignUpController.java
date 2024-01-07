@@ -44,5 +44,9 @@ public class UserLoginAndSignUpController implements UserLoginAndSignUpControlle
                 userDTO
         );
     }
+    @GetMapping()
+    public String hello() {
+        return "HI";
+    }
 }
 

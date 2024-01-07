@@ -25,9 +25,6 @@ class User {
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     private List<UserRole> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Token> tokens;
-
 
     public User(String userEmail, String userPassword) {
         this.userEmail = userEmail;

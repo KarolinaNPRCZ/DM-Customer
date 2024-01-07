@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 
 @Builder(toBuilder = true)
-public record UserDTO(UserId userId, String email, String password, List<UserRoleDTO> roles,List<TokenDTO> tokenDTOList) implements UserDetails {
+public record UserDTO(UserId userId, String email, String password, List<UserRoleDTO> roles,String Token) implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(UserRoleDTO::getAuthorities).collect(Collectors.toList());

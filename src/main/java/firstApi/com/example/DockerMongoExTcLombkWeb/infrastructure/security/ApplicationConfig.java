@@ -1,7 +1,6 @@
 package firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.security;
 
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.ports.out.UserService;
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.ports.out.UserTokenService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
