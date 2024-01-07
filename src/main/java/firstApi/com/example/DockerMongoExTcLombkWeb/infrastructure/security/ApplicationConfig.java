@@ -13,12 +13,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class ApplicationConfig {
+ class ApplicationConfig {
 
     @Bean
     UserDetailsService userDetailsService(UserService userService, UserMapperInterfaceImpl userMapperInterfaceImpl) {
         return username -> userMapperInterfaceImpl.fromUserDTO(
-                userService.getUserByUserEmail(username)
+                userService.getUserDTOByUserEmail(username)
         );
     }
 

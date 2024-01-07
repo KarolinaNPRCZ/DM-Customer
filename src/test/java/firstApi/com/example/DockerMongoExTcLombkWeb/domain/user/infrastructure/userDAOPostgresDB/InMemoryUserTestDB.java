@@ -13,7 +13,7 @@ import java.util.Optional;
 public class InMemoryUserTestDB implements UserDAOPort {
     private final Map<String,UserDTO> inMemoryDataBase = new HashMap<>();
     @Override
-    public Optional<UserDTO> getUserByUserEmail(String email) {
+    public Optional<UserDTO> getUserDTOByUserEmail(String email) {
         return null;
     }
 

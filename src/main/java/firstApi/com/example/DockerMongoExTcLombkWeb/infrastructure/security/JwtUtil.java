@@ -2,15 +2,13 @@ package firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.security;
 
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.ports.out.UserService;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.DTO.UserDTO;
-import firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.adapters.authcontroller.LoginRequest;
-import firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.adapters.authcontroller.LoginResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class JwtUtil {
+ class JwtUtil {
 
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -31,7 +29,7 @@ public class JwtUtil {
                         loginRequest.userPassword()
                 )
         );
-        UserDTO userDTO = userService.getUserByUserEmail(loginRequest.userEmail());
+        UserDTO userDTO = userService.getUserDTOByUserEmail(loginRequest.userEmail());
         var jwtToken = jwtService.generateToken(userDTO);
         var refreshToken = jwtService.generateRefreshToken(userDTO);
         userDTO.toBuilder().Token(refreshToken);

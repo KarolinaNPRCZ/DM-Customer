@@ -1,6 +1,5 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.adapters.authcontroller;
+package firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.security;
 
-import firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.security.JwtUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/login")
 @Log4j2
-public class AuthController {
+class AuthController {
     private final JwtUtil jwtUtil;
 
     public AuthController(JwtUtil jwtUtil) {

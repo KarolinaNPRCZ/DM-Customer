@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class LogoutService implements LogoutHandler {
+ class LogoutService implements LogoutHandler {
 
     @Override
     public void logout(

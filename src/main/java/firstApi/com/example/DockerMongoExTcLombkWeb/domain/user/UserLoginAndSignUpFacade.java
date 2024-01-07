@@ -5,7 +5,6 @@ import firstApi.com.example.DockerMongoExTcLombkWeb.domain.ports.out.UserService
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.DTO.UserDTO;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.DTO.UserId;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.transaction.annotation.Transactional;
 
 @Log4j2
 public class UserLoginAndSignUpFacade implements UserService {
@@ -28,9 +27,9 @@ public class UserLoginAndSignUpFacade implements UserService {
 
 
     @Override
-    @Transactional
-    public UserDTO getUserByUserEmail(String userEmail) throws UserNotFoundException {
-        return userDAOPort.getUserByUserEmail(userEmail)
+    public UserDTO getUserDTOByUserEmail(String userEmail) throws UserNotFoundException {
+        log.info("Facade -> Trying to get userDTO by e-mail");
+        return userDAOPort.getUserDTOByUserEmail(userEmail)
                 .orElseThrow(() -> new UserNotFoundException(userEmail));
     }
 

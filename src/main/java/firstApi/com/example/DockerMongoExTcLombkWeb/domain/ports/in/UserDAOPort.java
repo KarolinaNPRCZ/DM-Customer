@@ -7,7 +7,7 @@ import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.DTO.UserId;
 import java.util.Optional;
 
 public interface UserDAOPort {
-    Optional<UserDTO> getUserByUserEmail(String email);
+    Optional<UserDTO> getUserDTOByUserEmail(String email);
 
     UserId save(UserDTO userDTO) throws UserEmailArledyExistsException;
     //

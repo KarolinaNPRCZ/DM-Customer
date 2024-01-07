@@ -38,7 +38,7 @@ public class UserLoginAndSignUpController implements UserLoginAndSignUpControlle
     @Override
     public ResponseEntity<UserDTO> getUserByUserEmail(@PathVariable String userEmail) {
         log.warn("Trying to find user with email: {}...", userEmail);
-        UserDTO userDTO = userService.getUserByUserEmail(userEmail);
+        UserDTO userDTO = userService.getUserDTOByUserEmail(userEmail);
         log.info("User has successfully find: {}", userDTO);
         return ResponseEntity.ok(
                 userDTO

@@ -1,4 +1,4 @@
-package firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.adapters.authcontroller;
+package firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.security;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;

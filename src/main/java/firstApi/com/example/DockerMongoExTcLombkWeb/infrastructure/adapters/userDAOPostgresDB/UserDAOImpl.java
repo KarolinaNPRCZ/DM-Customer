@@ -1,11 +1,9 @@
 package firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.adapters.userDAOPostgresDB;
 
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.UserEmailArledyExistsException;
+import firstApi.com.example.DockerMongoExTcLombkWeb.domain.ports.in.UserDAOPort;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.DTO.UserDTO;
 import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.DTO.UserId;
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.ports.in.UserDAOPort;
-import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.UserMapperInterface;
-import firstApi.com.example.DockerMongoExTcLombkWeb.infrastructure.security.JwtService;
+import firstApi.com.example.DockerMongoExTcLombkWeb.domain.user.UserEmailArledyExistsException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -14,7 +12,7 @@ import java.util.Optional;
 
 
 @Log4j2
- class UserDAOImpl implements UserDAOPort {
+class UserDAOImpl implements UserDAOPort {
 
     private final UserRepository userRepository;
     private final UserDTOMapper userDTOMapper;
@@ -33,7 +31,7 @@ import java.util.Optional;
 
 
     @Override
-    public Optional<UserDTO> getUserByUserEmail(String userEmail) {
+    public Optional<UserDTO> getUserDTOByUserEmail(String userEmail) {
         log.info("DAOImpl download data");
         Optional<UserDTO> userDTO = userRepository.getUserByUserEmail(userEmail).map(userDTOMapper::mapToDTO);
 
@@ -46,11 +44,11 @@ import java.util.Optional;
         user.setRoles(Collections.singletonList(userRoleRepository.getUserRoleByName(Role.USER)));
         User savedUser;
         log.info("DAOImpl saving");
-         try {
-             savedUser = userRepository.save(user);
-         }catch (DataIntegrityViolationException exception){
-           throw new UserEmailArledyExistsException("User with given email address already exists");
-         }
+        try {
+            savedUser = userRepository.save(user);
+        } catch (DataIntegrityViolationException exception) {
+            throw new UserEmailArledyExistsException("User with given email address already exists");
+        }
         return new UserId(savedUser.getId());
     }
 }
