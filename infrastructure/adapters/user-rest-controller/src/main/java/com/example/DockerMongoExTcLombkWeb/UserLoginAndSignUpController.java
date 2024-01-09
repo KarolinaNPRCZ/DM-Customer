@@ -12,6 +12,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+
+//TODO Handle UserNotFoundException
 @RestController
 @RequestMapping("/users")
 @Log4j2

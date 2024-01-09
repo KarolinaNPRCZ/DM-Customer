@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
                         loginRequest.userPassword()
                 )
         );
+
         UserDTO userDTO = userService.getUserDTOByUserEmail(loginRequest.userEmail());
         var jwtToken = jwtService.generateToken(userDTO);
         var refreshToken = jwtService.generateRefreshToken(userDTO);
