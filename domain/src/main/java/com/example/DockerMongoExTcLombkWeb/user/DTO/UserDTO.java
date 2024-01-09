@@ -1,6 +1,7 @@
 package com.example.DockerMongoExTcLombkWeb.user.DTO;
 import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 public record UserDTO(UserId userId, String email, String password, List<UserRoleDTO> roles, String Token) implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(UserRoleDTO::getAuthorities).collect(Collectors.toList());
+        return roles.stream().map(roleName -> new SimpleGrantedAuthority(roleName.name())).collect(Collectors.toList());
     }
 
     @Override

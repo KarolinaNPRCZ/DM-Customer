@@ -8,8 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Builder(toBuilder = true)
 public record UserRoleDTO(String name) {
-    public SimpleGrantedAuthority getAuthorities() {
+  /*  public SimpleGrantedAuthority getAuthorities() {
         return new SimpleGrantedAuthority(name);
-    }
+    }*/
 
 }
