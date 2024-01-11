@@ -24,7 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
     @Bean
-    public AuthenticationProvider authenticationProvider(UserService userService, UserMapperInterfaceImpl userMapperInterfaceImpl) {
+     AuthenticationProvider authenticationProvider(UserService userService, UserMapperInterfaceImpl userMapperInterfaceImpl) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService(userService,userMapperInterfaceImpl));
         authProvider.setPasswordEncoder(passwordEncoder());
@@ -32,23 +32,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
     }
 
     @Bean
-    public AuditorAware<Integer> auditorAware() {
+     AuditorAware<Integer> auditorAware() {
         return new ApplicationAuditAware();
     }
 
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+     AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
     @Bean
-    public UserMapperInterfaceImpl userMapperInterface() {
+     UserMapperInterfaceImpl userMapperInterface() {
         return new UserMapperInterfaceImpl();
     }
 

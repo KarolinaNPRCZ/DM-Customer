@@ -28,6 +28,11 @@
             <artifactId>domain</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>firstApi.com.example</groupId>
+            <artifactId>AOP</artifactId>
+            <version>1.0</version>
+        </dependency>
 
     </dependencies>
 
