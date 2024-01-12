@@ -1,6 +1,7 @@
 package com.example.DockerMongoExTcLombkWeb.error;
 
 import com.example.DockerMongoExTcLombkWeb.user.UserEmailArledyExistsException;
+import com.example.DockerMongoExTcLombkWeb.user.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +18,17 @@ public class UserControllerExceptionHandler {
         return new UserAlreadyExistsResponse(
                 exception.getMessage(),
                 HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    UserAlreadyExistsResponse handle(UserNotFoundException exception) {
+
+        return new UserAlreadyExistsResponse(
+                exception.getMessage(),
+                HttpStatus.NOT_FOUND
         );
     }
 

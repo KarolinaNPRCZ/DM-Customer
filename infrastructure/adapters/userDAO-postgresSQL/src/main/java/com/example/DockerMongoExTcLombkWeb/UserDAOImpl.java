@@ -1,9 +1,9 @@
 package com.example.DockerMongoExTcLombkWeb;
 
+import com.example.DockerMongoExTcLombkWeb.ports.in.UserDAOPort;
 import com.example.DockerMongoExTcLombkWeb.user.DTO.UserDTO;
 import com.example.DockerMongoExTcLombkWeb.user.DTO.UserId;
 import com.example.DockerMongoExTcLombkWeb.user.UserEmailArledyExistsException;
-import com.example.DockerMongoExTcLombkWeb.ports.in.UserDAOPort;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -32,7 +32,7 @@ class UserDAOImpl implements UserDAOPort {
 
     @Override
     public Optional<UserDTO> getUserDTOByUserEmail(String userEmail) {
-        log.info("DAOImpl download data");
+        log.info("DAOImpl download user from DB");
         Optional<UserDTO> userDTO = userRepository.getUserByUserEmail(userEmail).map(userDTOMapper::mapToDTO);
 
         return userDTO;
@@ -43,11 +43,11 @@ class UserDAOImpl implements UserDAOPort {
         User user = userEntityMapper.mapToUser(userDTO);
         user.setRoles(Collections.singletonList(userRoleRepository.getUserRoleByName(Role.USER)));
         User savedUser;
-        log.info("DAOImpl saving");
+        log.info("DAOImpl try save user");
         try {
             savedUser = userRepository.save(user);
         } catch (DataIntegrityViolationException exception) {
-            throw new UserEmailArledyExistsException("User with given email address already exists");
+            throw new UserEmailArledyExistsException("User with given e-mail already exists");
         }
         return new UserId(savedUser.getId());
     }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/login")
 @Log4j2
 class AuthController {
-    //TODO Throw and Handle exceptions for login
     //TODO Refactor Mappings
     private final JwtAuthenticator jwtAuthenticator;
 

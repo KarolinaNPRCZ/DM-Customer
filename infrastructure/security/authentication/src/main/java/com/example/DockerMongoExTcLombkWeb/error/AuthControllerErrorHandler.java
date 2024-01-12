@@ -27,7 +27,7 @@ import java.util.Collections;
     }
 
     @LogHandlerMethodExec(
-            loggerName = "TokenControllerErrorHandler",
+            loggerName = "AuthControllerErrorHandler",
             handlerClazz = AuthControllerErrorHandler.class,
             caughtException = InternalAuthenticationServiceException.class
     )
