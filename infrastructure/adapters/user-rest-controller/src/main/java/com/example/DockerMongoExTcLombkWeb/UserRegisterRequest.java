@@ -1,19 +1,22 @@
 package com.example.DockerMongoExTcLombkWeb;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 
 @Log4j2
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
  class UserRegisterRequest {
     @NotNull(message = "{not.null}")
     @NotBlank(message = "{not.blank}")
     @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",message = "{wrong.value}")
-    String UserEmail;
+    String userEmail;
 
     @NotNull(message = "{not.null}")
     @NotBlank(message = "{not.blank}")
@@ -24,8 +27,9 @@ import lombok.extern.log4j.Log4j2;
 
     @NotNull(message = "{not.null}")
     @NotBlank(message = "{not.blank}")
-    private String confirmUserPassword;
+    String confirmUserPassword;
 
+    @JsonIgnore
     @AssertTrue(message = "{not.equal}")
     public boolean isUserPasswordConfirmed() {
         return userPassword.equals(confirmUserPassword);
