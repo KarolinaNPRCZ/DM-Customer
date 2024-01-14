@@ -16,8 +16,8 @@ public class InMemoryDataBaseAdapter implements UserDAOPort {
     }
 
     @Override
-    public UserId save(UserDTO userDTO) throws UserEmailArledyExistsException {
-        if (users.containsKey(userDTO.email())) throw new UserEmailArledyExistsException("User with given e-mail already exists");
+    public UserId save(UserDTO userDTO) throws UserAlreadyExistsException {
+        if (users.containsKey(userDTO.email())) throw new UserAlreadyExistsException("User with given e-mail already exists");
         UserDTO userToSave = userDTO.toBuilder().build();
         if (userDTO.userId() == null){
             userToSave = userDTO.toBuilder().userId(new UserId(5)).build();

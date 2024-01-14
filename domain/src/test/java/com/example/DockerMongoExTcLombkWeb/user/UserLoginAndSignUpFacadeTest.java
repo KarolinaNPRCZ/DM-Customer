@@ -33,7 +33,7 @@ class UserLoginAndSignUpFacadeTest {
         //WHEN
         inMemoryDataBaseAdapter.save(createUser);
         //THEN
-        Assertions.assertThrows(UserEmailArledyExistsException.class,()->userLoginAndSignUpFacade.createUser(createUser.email(), createUser.password()));
+        Assertions.assertThrows(UserAlreadyExistsException.class,()->userLoginAndSignUpFacade.createUser(createUser.email(), createUser.password()));
     }
 
     @Test

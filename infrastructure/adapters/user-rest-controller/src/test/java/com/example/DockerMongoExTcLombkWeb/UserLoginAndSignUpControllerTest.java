@@ -2,6 +2,7 @@ package com.example.DockerMongoExTcLombkWeb;
 
 import com.example.DockerMongoExTcLombkWeb.ports.out.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -39,9 +41,7 @@ class UserLoginAndSignUpControllerTest {
         UserRegisterRequest userRegisterRequest = new UserRegisterRequest("karolina@admin.com", "Password10", "Password10");
 
         //WHEN
-        ResultActions resultActions = mockMvc.perform(post("/users/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(userRegisterRequest)));
+        ResultActions resultActions = getResultActions(post("/users/register"), objectMapper.writeValueAsString(userRegisterRequest));
         //THEN
         verify(userService, times(1)).createUser(Mockito.any(),Mockito.any());
 
@@ -56,9 +56,7 @@ class UserLoginAndSignUpControllerTest {
         //GIVEN
         String email = "karolina@admin.com";
         //WHEN
-        ResultActions resultActions = mockMvc.perform(get("/users/{}")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(email)));
+        ResultActions resultActions = getResultActions(get("/users/{}"), objectMapper.writeValueAsString(email));
         //THEN
         verify(userService, times(1)).getUserDTOByUserEmail(Mockito.any());
 
@@ -67,6 +65,13 @@ class UserLoginAndSignUpControllerTest {
                 .getStatus())
                 .isEqualTo(200);
 
+    }
+
+    @NotNull
+    private ResultActions getResultActions(MockHttpServletRequestBuilder mockHttpServletRequestBuilder, String objectMapper) throws Exception {
+        return mockMvc.perform(mockHttpServletRequestBuilder
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper));
     }
 
 
