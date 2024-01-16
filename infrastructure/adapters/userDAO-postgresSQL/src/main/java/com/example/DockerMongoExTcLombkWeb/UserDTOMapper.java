@@ -1,7 +1,6 @@
 package com.example.DockerMongoExTcLombkWeb;
 
 import com.example.DockerMongoExTcLombkWeb.user.DTO.UserDTO;
-import com.example.DockerMongoExTcLombkWeb.user.DTO.UserId;
 import com.example.DockerMongoExTcLombkWeb.user.DTO.UserRoleDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ class UserDTOMapper implements Function<User, UserDTO> {
     @Override
     public UserDTO apply(User user) {
         return new UserDTO(
-                new UserId(user.getId()),
+                user.getId(),
                 user.getUserEmail(),
                 user.getUserPassword(),
                 getListOfUserRoles(user),//String token

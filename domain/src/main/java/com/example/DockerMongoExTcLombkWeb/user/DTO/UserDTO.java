@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 
 @Builder(toBuilder = true)
-public record UserDTO(UserId userId, String email, String password, List<UserRoleDTO> roles, String Token) implements UserDetails {
+public record UserDTO(Integer userId, String email, String password, List<UserRoleDTO> roles, String Token) implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(roleName -> new SimpleGrantedAuthority(roleName.name())).collect(Collectors.toList());
@@ -30,7 +30,6 @@ public record UserDTO(UserId userId, String email, String password, List<UserRol
     public boolean isAccountNonExpired() {
         return true;
     }
-
     @Override
     public boolean isAccountNonLocked() {
         return true;

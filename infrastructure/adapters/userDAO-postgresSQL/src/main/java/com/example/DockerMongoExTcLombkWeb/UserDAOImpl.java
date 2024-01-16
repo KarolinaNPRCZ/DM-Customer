@@ -2,7 +2,6 @@ package com.example.DockerMongoExTcLombkWeb;
 
 import com.example.DockerMongoExTcLombkWeb.ports.in.UserDAOPort;
 import com.example.DockerMongoExTcLombkWeb.user.DTO.UserDTO;
-import com.example.DockerMongoExTcLombkWeb.user.DTO.UserId;
 import com.example.DockerMongoExTcLombkWeb.user.UserAlreadyExistsException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -39,7 +38,7 @@ class UserDAOImpl implements UserDAOPort {
     }
 
     @Override
-    public UserId save(UserDTO userDTO) {
+    public Integer save(UserDTO userDTO) {
         User user = userEntityMapper.mapToUser(userDTO);
         user.setRoles(Collections.singletonList(userRoleRepository.getUserRoleByName(Role.USER)));
         User savedUser;
@@ -49,7 +48,7 @@ class UserDAOImpl implements UserDAOPort {
         } catch (DataIntegrityViolationException exception) {
             throw new UserAlreadyExistsException("User with given e-mail already exists");
         }
-        return new UserId(savedUser.getId());
+        return savedUser.getId();
     }
 }
 

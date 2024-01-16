@@ -23,6 +23,6 @@ class ApplicationAuditAware implements AuditorAware<Integer> {
         }
 
         UserDTO userPrincipal = (UserDTO) authentication.getPrincipal();
-        return Optional.ofNullable(userPrincipal.userId().getId());
+        return Optional.ofNullable(userPrincipal.userId());
     }
 }
