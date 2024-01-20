@@ -35,7 +35,7 @@ class UserDTOMapperTest {
 
         // THEN
         assertThat(appliedUser.email()).isEqualTo(userDTO.email());
-        assertThat(appliedUser.password()).isEqualTo(userDTO.getPassword());
+        assertThat(appliedUser.password()).isEqualTo(userDTO.password());
     }
 
     @Test
@@ -45,7 +45,7 @@ class UserDTOMapperTest {
 
         // THEN
         assertThat(appliedUser.email()).isEqualTo(userDTO.email());
-        assertThat(appliedUser.password()).isEqualTo(userDTO.getPassword());
+        assertThat(appliedUser.password()).isEqualTo(userDTO.password());
     }
 
     @Test

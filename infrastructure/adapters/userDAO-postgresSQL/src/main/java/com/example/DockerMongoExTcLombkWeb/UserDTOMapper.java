@@ -21,7 +21,7 @@ class UserDTOMapper implements Function<User, UserDTO> {
                 user.getId(),
                 user.getUserEmail(),
                 user.getUserPassword(),
-                getListOfUserRoles(user),//String token
+                getListOfUserRoles(user),
                 "token");
     }
 
