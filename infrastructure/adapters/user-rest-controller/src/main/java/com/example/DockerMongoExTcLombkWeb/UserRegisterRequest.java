@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
+import java.util.Optional;
+
 
 @Log4j2
 @Getter
@@ -15,12 +17,11 @@ import lombok.extern.log4j.Log4j2;
  class UserRegisterRequest {
     @NotNull(message = "{not.null}")
     @NotBlank(message = "{not.blank}")
-    @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",message = "{wrong.value}")
+    @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",message = "{wrong.email}")
     String userEmail;
 
     @NotNull(message = "{not.null}")
     @NotBlank(message = "{not.blank}")
-    @Size(min = 8,message = "{wrong.size}}")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{8,}$",
             message = "{wrong.password}")
     String userPassword;
@@ -32,7 +33,8 @@ import lombok.extern.log4j.Log4j2;
     @JsonIgnore
     @AssertTrue(message = "{not.equal}")
     public boolean isUserPasswordConfirmed() {
-        return userPassword.equals(confirmUserPassword);
+        return Optional.ofNullable(userPassword).map(userPassword -> userPassword.equals(confirmUserPassword)).orElse(false);
+       //userPassword.equals(confirmUserPassword);
     }
 
 
