@@ -1,7 +1,7 @@
 package com.nprcz.dmcustomer.validate.controller.auth;
 
-import com.example.DockerMongoExTcLombkWeb.error.BadCredentialsResponseDTO;
-import com.example.DockerMongoExTcLombkWeb.ports.out.UserService;
+import com.nprcz.dmcustomer.error.BadCredentialsResponseDTO;
+import com.nprcz.dmcustomer.ports.out.UserService;
 import com.nprcz.dmcustomer.AbstractIntegrationTests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

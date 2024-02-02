@@ -1,6 +1,5 @@
 package com.nprcz.dmcustomer;
 
-import com.example.DockerMongoExTcLombkWeb.DockerMongoExTcLombkWebApplication;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -29,7 +28,7 @@ public class AbstractIntegrationTests {
     protected static PostgreSQLContainer<?> postgresContainer =
             new PostgreSQLContainer<>(
                     DockerImageName.parse("postgres:15.2")
-            );
+            ).withInitScript("init-test-data.sql");
 
      @RegisterExtension
      protected static WireMockExtension wireMockServer = WireMockExtension.newInstance()
@@ -38,7 +37,6 @@ public class AbstractIntegrationTests {
     @DynamicPropertySource
     private static void propertyOverride(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", postgresContainer::getJdbcUrl);
-          registry.add("dmcustomer.order.fetcher.port", wireMockServer::getPort);
     }
 
     @Autowired
