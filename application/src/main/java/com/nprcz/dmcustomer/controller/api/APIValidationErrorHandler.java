@@ -93,26 +93,4 @@ public class APIValidationErrorHandler {
                 .body(messageSource.getMessage("invalid.type", args, locale));
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(ValidationException.class)
-    @LogHandlerMethodExec(
-            loggerName = loggerName,
-            handlerClazz = APIValidationErrorHandler.class,
-            caughtException = ValidationException.class
-    )
-    ResponseEntity<String> handleMethodValidationException(
-            ValidationException exception,
-            WebRequest request
-    ) {
-        Locale locale = request.getLocale();
-        Object firstArg = exception.getMessage();
-        Object secondArg = Objects.requireNonNull(exception.getClass())
-                .getSimpleName();
-        Object[] args = new Object[]{
-                firstArg,
-                secondArg
-        };
-        return ResponseEntity.badRequest()
-                .body(messageSource.getMessage("invalid.empty", args, locale));
-    }
 }

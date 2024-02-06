@@ -34,7 +34,6 @@ import java.util.Optional;
     @AssertTrue(message = "{not.equal}")
     public boolean isUserPasswordConfirmed() {
         return Optional.ofNullable(userPassword).map(userPassword -> userPassword.equals(confirmUserPassword)).orElse(false);
-       //userPassword.equals(confirmUserPassword);
     }
 
 
