@@ -1,7 +1,6 @@
 package com.nprcz.dmcustomer.controller.api;
 
 import com.nprcz.dmcustomer.LogHandlerMethodExec;
-import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;

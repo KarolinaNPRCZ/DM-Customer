@@ -1,8 +1,8 @@
 package com.nprcz.dmcustomer.validate.controller.auth;
 
+import com.nprcz.dmcustomer.AbstractIntegrationTests;
 import com.nprcz.dmcustomer.error.BadCredentialsResponseDTO;
 import com.nprcz.dmcustomer.ports.out.UserService;
-import com.nprcz.dmcustomer.AbstractIntegrationTests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class AuthControllerErrorHandlerTest extends AbstractIntegrationTests {
+ class AuthControllerErrorHandlerTest extends AbstractIntegrationTests {
 
     @DynamicPropertySource
     protected static void propertyOverride(DynamicPropertyRegistry registry) {

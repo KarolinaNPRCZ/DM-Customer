@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     ports:
       - "27017:27017"
+
   mongo-express:
     image: 'mongo-express:0.54.0'
     container_name: mongoExpress
@@ -17,10 +18,10 @@ services:
       - ME_CONFIG_BASICAUTH_PASSWORD=mongoExpress
     links:
       - mongodb
-
     restart: unless-stopped
     ports:
       - "8081:8081"
+
   postgres:
     container_name: postgres
     image: postgres:15.2
@@ -32,7 +33,25 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: users
     volumes:
-      - pgdata:/var/lib/postgresql
-volumes:
-   pgdata: { }
+      - pgdata:/var/lib/postgresql/data
 
+  dmcustomer:
+    container_name: dm-customer
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8080"
+    environment:
+      POSTGRES_HOSTNAME: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB_NAME: users
+      POSTGRES_USERNAME: user
+      POSTGRES_PASSWORD: password
+    links:
+      - "postgres"
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata: {}
