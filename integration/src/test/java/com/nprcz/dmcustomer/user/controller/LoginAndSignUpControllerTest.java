@@ -1,8 +1,8 @@
 package com.nprcz.dmcustomer.user.controller;
 
-import com.example.DockerMongoExTcLombkWeb.ports.in.UserDAOPort;
-import com.example.DockerMongoExTcLombkWeb.ports.out.UserService;
-import com.example.DockerMongoExTcLombkWeb.user.DTO.UserDTO;
+import com.nprcz.dmcustomer.ports.in.UserDAOPort;
+import com.nprcz.dmcustomer.ports.out.UserService;
+import com.nprcz.dmcustomer.user.DTO.UserDTO;
 import com.nprcz.dmcustomer.AbstractIntegrationTests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
