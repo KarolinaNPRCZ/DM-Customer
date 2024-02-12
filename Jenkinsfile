@@ -1,8 +1,11 @@
 pipeline {
-    agent any
-    tools{
-        maven 'Maven 3_9_3'
-    }
+   agent {
+           docker {
+               image 'maven:3.9.3-jdk-17'
+
+               args '-v /var/run/docker.sock:/var/run/docker.sock'
+           }
+       }
     stages{
         stage('Build Maven'){
             steps{
