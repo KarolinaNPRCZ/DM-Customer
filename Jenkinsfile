@@ -10,13 +10,6 @@ pipeline {
                 sh 'mvn install -DskipTests'
             }
         }
-        stage('Start Ryuk') {
-                    steps {
-                        script {
-                            sh 'docker run -d --network host --name ryuk-testcontainers testcontainers/ryuk:0.3.4'
-                        }
-                    }
-                }
         stage('Test') {
             steps {
                 sh 'mvn test'
