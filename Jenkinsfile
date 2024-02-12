@@ -13,7 +13,6 @@ pipeline {
         stage('Start Ryuk') {
                     steps {
                         script {
-                            // Run Ryuk container
                             sh 'docker run -d --network host --name ryuk-testcontainers testcontainers/ryuk:1.5.2'
                         }
                     }
