@@ -27,18 +27,8 @@ pipeline {
 
        stage('Integration test') {
            steps {
-               script {
+                        sh 'mvn test -pl integration'
 
-                   sh 'docker run -d -p 5432:5432 postgres:15.2'
-                   try {
-                       docker.image(POSTGRES_CONTAINER).withRun('-p 5432:5432') { postgresContainer ->
-                           sh 'mvn test -pl integration'
-                       }
-                   } finally {
-
-                       sh 'docker stop $(docker ps -q)'
-                   }
-               }
            }
            post {
                always {
