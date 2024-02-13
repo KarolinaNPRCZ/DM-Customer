@@ -2,9 +2,7 @@ pipeline {
    agent {
            docker {
                image 'maven:3.8.5-openjdk-17'
-               args '--network host'
-
-
+               args '--network host -v /var/run/docker.sock:/var/run/docker.sock --group-add 103'
            }
        }
 
