@@ -13,9 +13,9 @@ pipeline {
                 sh 'mvn install -DskipTests'
             }
         }
-        stage('Test') {
+        stage('Integration test') {
             steps {
-                sh 'mvn test'
+                sh 'mvn test -pl integration'
             }
             post {
               always {
