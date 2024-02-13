@@ -9,6 +9,7 @@ pipeline {
 
     environment {
         TC_CLOUD_TOKEN = credentials('tc-cloud-token-secret-id')
+        TESTCONTAINERS_RYUK_DISABLED = 'true'
     }
 
 
