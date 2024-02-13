@@ -2,14 +2,16 @@ pipeline {
    agent {
            docker {
                image 'maven:3.8.5-openjdk-17'
+               args '--network host'
 
-               args '-v /var/run/docker.sock:/var/run/docker.sock --group-add 103'
+
            }
        }
 
     environment {
         TC_CLOUD_TOKEN = credentials('tc-cloud-token-secret-id')
-        TESTCONTAINERS_RYUK_DISABLED = 'true'
+        POSTGRES_CONTAINER = 'postgres:15.2'
+
     }
 
 
@@ -29,7 +31,14 @@ pipeline {
          }
         stage('Integration test') {
             steps {
-                sh 'mvn test -pl integration'
+             script {
+
+
+                                docker.image(POSTGRES_CONTAINER).withRun('-p 5432:5432') { postgresContainer ->
+                                    sh 'mvn test -pl integration'
+                                }
+                            }
+
             }
             post {
               always {
