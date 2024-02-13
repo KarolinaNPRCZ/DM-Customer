@@ -25,7 +25,7 @@ pipeline {
             steps {
                 sh "curl -fsSL https://get.testcontainers.cloud/bash | sh "
             }
-
+         }
         stage('Integration test') {
             steps {
                 sh 'mvn test -pl integration'
@@ -40,4 +40,3 @@ pipeline {
 }
 
 
-}
