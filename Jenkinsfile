@@ -6,6 +6,10 @@ pipeline {
                args '-v /var/run/docker.sock:/var/run/docker.sock'
            }
        }
+        environment {
+               DOCKER_HOST = 'tcp://localhost:2375'
+               DOCKER_TLS_VERIFY = 0
+           }
     stages{
         stage('Build Maven'){
             steps{
