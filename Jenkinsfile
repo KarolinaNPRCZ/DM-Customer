@@ -38,18 +38,11 @@ pipeline {
            steps {
 
              script{
-                 docker.build('dm-customer_docker_image', '-f Dockerfile .')
+                 docker.build('dm-customer_docker_image', '-f Dockerfile .').push()
 
              }
            }
         }
-        stage('Run Docker Image') {
-           steps {
 
-           script {
-                       sh 'docker run dm-customer_docker_image'
-                   }
-           }
-        }
    }
 }
