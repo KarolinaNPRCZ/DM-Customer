@@ -24,7 +24,7 @@ pipeline {
            }
         }
 
-       stage('Integration test') {
+       stage('Run test') {
            steps {
                         sh 'mvn test'
 
@@ -39,7 +39,7 @@ pipeline {
            steps {
 
              script{
-                 docker.build('dm-customer_docker_image', '-f DM-Customer/Dockerfile .')
+                 docker.build('dm-customer_docker_image', '-f Dockerfile .')
 
              }
            }
