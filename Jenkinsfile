@@ -47,10 +47,9 @@ pipeline {
         stage('Run Docker Image') {
            steps {
 
-           script{
-
-                 docker.run('dm-customer_docker_image')
-           }
+           script {
+                       sh 'docker run dm-customer_docker_image'
+                   }
            }
         }
    }
