@@ -35,5 +35,14 @@ pipeline {
                }
            }
        }
+        stage('Build Docker Image') {
+           steps {
+
+
+                 docker.build('dm-customer_docker_image', '-f DM-Customer\Dockerfile .')
+
+
+           }
+        }
    }
 }
