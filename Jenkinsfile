@@ -44,5 +44,14 @@ pipeline {
              }
            }
         }
+        stage('Run Docker Image') {
+           steps {
+
+           script{
+
+                 docker.run('dm-customer_docker_image')
+           }
+           }
+        }
    }
 }
