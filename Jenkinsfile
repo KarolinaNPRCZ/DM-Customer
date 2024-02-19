@@ -7,7 +7,6 @@ pipeline {
 
    environment {
        TC_CLOUD_TOKEN = credentials('tc-cloud-token-secret-id')
-       POSTGRES_CONTAINER = 'postgres:15.2'
    }
 
    stages{
