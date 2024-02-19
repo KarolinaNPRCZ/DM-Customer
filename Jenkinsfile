@@ -38,10 +38,10 @@ pipeline {
         stage('Build Docker Image') {
            steps {
 
-
+             script{
                  docker.build('dm-customer_docker_image', '-f DM-Customer/Dockerfile .')
 
-
+             }
            }
         }
    }
