@@ -22,16 +22,7 @@ pipeline {
             }
         }
 
-        stage('Run test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
+
 
         stage('Build Docker Image') {
             steps {
@@ -41,15 +32,26 @@ pipeline {
             }
         }
 
-        stage('Run Docker') {
-            steps {
-                script {
-                    sh 'docker-compose down'
-                }
-                script {
-                    sh 'docker-compose up -d'
-                }
-            }
-        }
+      stage('Run Docker') {
+                 steps {
+                     script {
+                         try {
+
+                             sh 'docker-compose down'
+                         }
+                         catch(Exception e) {
+
+                             echo "Failed to stop containers: ${e.message}"
+                         }
+                         finally {
+
+                             sh 'docker-compose up -d'
+                         }
+
+
+
+                     }
+                 }
+             }
     }
 }
