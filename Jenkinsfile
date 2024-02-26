@@ -1,48 +1,66 @@
 pipeline {
-   agent any
-   tools {
-           maven 'Maven 3_9_3'
-       }
+    agent any
+    tools {
+        maven 'Maven 3_9_3'
+    }
 
+    environment {
+        TC_CLOUD_TOKEN = credentials('tc-cloud-token-secret-id')
+    }
 
-   environment {
-       TC_CLOUD_TOKEN = credentials('tc-cloud-token-secret-id')
-       POSTGRES_CONTAINER = 'postgres:15.2'
-   }
-
-   stages{
-       stage('Build Maven'){
-           steps{
-               checkout([$class: 'GitSCM', branches: [[name: '*/develop']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/KarolinaNPRCZ/DM-Customer']]])
-               sh 'mvn install -DskipTests'
-           }
-       }
-
-       stage('TCC SetUp') {
-           steps {
-               sh "curl -fsSL https://get.testcontainers.cloud/bash | sh "
-           }
+    stages {
+        stage('Build Maven') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/feature/004/Jenkins']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/KarolinaNPRCZ/DM-Customer']]])
+                sh 'mvn install -DskipTests'
+            }
         }
 
-       stage('Integration test') {
-           steps {
-                        sh 'mvn test -pl integration'
+        stage('TCC SetUp') {
+            steps {
+                sh "curl -fsSL https://get.testcontainers.cloud/bash | sh "
+            }
+        }
 
-           }
-           post {
-               always {
-                   junit 'target/surefire-reports/*.xml'
-               }
-           }
-       }
+         stage('Run test') {
+                            steps {
+                                sh 'mvn test'
+                            }
+                            post {
+                                always {
+                                    junit 'target/surefire-reports/*.xml'
+                                }
+                            }
+                        }
+
         stage('Build Docker Image') {
-           steps {
-
-
-                 docker.build('dm-customer_docker_image', '-f DM-Customer\Dockerfile .')
-
-
-           }
+            steps {
+                script {
+                    docker.build('dm-customer_docker_image', '-f Dockerfile .')
+                }
+            }
         }
-   }
+
+      stage('Run Docker') {
+                 steps {
+                     script {
+                         try {
+
+                             sh 'docker-compose down'
+                         }
+                         catch(Exception e) {
+
+                             echo "Failed to stop containers: ${e.message}"
+                         }
+                         finally {
+
+                             sh 'docker-compose up -d'
+                         }
+
+
+
+                     }
+                 }
+             }
+    }
 }

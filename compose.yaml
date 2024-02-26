@@ -3,7 +3,7 @@ services:
   mongodb:
     image: 'mongo:5.0'
     container_name: mongo
-    restart: unless-stopped
+    restart: always
     ports:
       - "27017:27017"
 
@@ -18,7 +18,7 @@ services:
       - ME_CONFIG_BASICAUTH_PASSWORD=mongoExpress
     links:
       - mongodb
-    restart: unless-stopped
+    restart: always
     ports:
       - "8081:8081"
 
@@ -35,7 +35,8 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  dmcustomer:
+
+  dm-customer:
     container_name: dm-customer
     build:
       context: .
@@ -48,10 +49,10 @@ services:
       POSTGRES_DB_NAME: users
       POSTGRES_USERNAME: user
       POSTGRES_PASSWORD: password
-    links:
-      - "postgres"
     depends_on:
       - postgres
 
 volumes:
   pgdata: {}
+networks:
+  dm-customer-backend:
