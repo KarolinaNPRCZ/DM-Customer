@@ -2,23 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>com.nprcz.dmcustomer</groupId>
-        <artifactId>infrastructure</artifactId>
+        <artifactId>adapters</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>adapters</artifactId>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>userDAO-postgresSQL</module>
-        <module>user-rest-controller</module>
-        <module>productDAO-mongoDB</module>
-    </modules>
+    <artifactId>productDAO-mongoDB</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -27,21 +18,22 @@
     </properties>
 
     <dependencies>
+        <!-- Spring Boot Starter Dependencies -->
         <dependency>
-            <groupId>com.nprcz.dmcustomer</groupId>
-            <artifactId>domain</artifactId>
-            <version>1.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <optional>true</optional>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.nprcz.dmcustomer</groupId>
-            <artifactId>AOP</artifactId>
-            <version>1.0</version>
-        </dependency>
+
     </dependencies>
+
+    <build>
+        <!-- Output directory for the generated JAR -->
+        <directory>../../../target/adapter-mongodb-target-jar</directory>
+    </build>
 
 </project>
