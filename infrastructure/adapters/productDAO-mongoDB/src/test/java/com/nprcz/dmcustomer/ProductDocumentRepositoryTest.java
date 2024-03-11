@@ -25,12 +25,12 @@ class ProductDocumentRepositoryTest implements SamplesProductsResponse {
     void setUp() {
         productDocument = ProductDocument.builder()
                 .productSKUId(1)
-                .productName("paper")
-                .productPrice(5.43)
-                .productDescription("productDescriptionTest")
-                .categories(List.of("testCategories", "Test"))
-                .createdAt(LocalDateTime.of(2024,3,11,12,10))
-                .updatedAt(LocalDateTime.of(2024,3,11,12,10).plusHours(24)).build();
+                .productName("Premium A4 Copy Paper")
+                .productPrice(14.10)
+                .productDescription("High-quality A4 copy paper suitable for home and office use.")
+                .categories(List.of("office", "stationery"))
+                .createdAt(LocalDateTime.of(2024, 3, 11, 12, 10))
+                .updatedAt(LocalDateTime.of(2024, 3, 11, 12, 10).plusHours(24)).build();
 
     }
 
