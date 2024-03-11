@@ -6,9 +6,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder(toBuilder = true)
-public record ProductDTO(Integer productId,
+public record ProductDTO(Integer productSKUId,
                          String productName,
-                         double productPrice,
+                         Double productPrice,
                          String productDescription,
                          List<String> categories,
                          LocalDateTime createdAt,

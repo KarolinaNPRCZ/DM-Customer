@@ -28,7 +28,7 @@ class ProductDocumentMapperTest {
         LocalDateTime productCreatedAtTest = LocalDateTime.of(2024,3,3,14,30);
         LocalDateTime productUpdatedAtTest = productCreatedAtTest.plusHours(24);
         productDocument = ProductDocument.builder()
-                .productId(1)
+                .productSKUId(1)
                 .productName(productNameTest)
                 .productPrice(productPriceTest)
                 .productDescription(productDescriptionTest)
@@ -36,7 +36,7 @@ class ProductDocumentMapperTest {
                 .createdAt(productCreatedAtTest)
                 .updatedAt(productUpdatedAtTest).build();
          productDTO = ProductDTO.builder()
-                .productId(1)
+                .productSKUId(1)
                 .productName(productNameTest)
                 .productPrice(productPriceTest)
                 .productDescription(productDescriptionTest)

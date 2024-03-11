@@ -36,9 +36,9 @@ class ProductDAOImplTest {
         testCategories.add("home");
         testCategories.add("office");
         ProductDocument productDocument = new ProductDocument();
-        productDocument.setProductId(1);
+        productDocument.setProductSKUId(1);
         ProductDTO productDTO = ProductDTO.builder()
-                .productId(1)
+                .productSKUId(1)
                 .productName("papper")
                 .productPrice(14.10)
                 .productDescription("best papper on the world")

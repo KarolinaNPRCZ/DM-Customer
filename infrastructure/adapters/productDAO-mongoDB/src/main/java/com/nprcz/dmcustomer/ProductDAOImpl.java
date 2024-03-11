@@ -20,6 +20,6 @@ class ProductDAOImpl {
 
         log.info("productDocumentDAO try save product to database");
         ProductDocument savedProductDocument = productDocumentRepository.save(productDocument);
-        return savedProductDocument.productId;
+        return savedProductDocument.productSKUId;
     }
 }

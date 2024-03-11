@@ -14,9 +14,9 @@ import java.util.List;
 @Setter
 class ProductDocument {
      @Id
-     Integer productId;
+     Integer productSKUId;
      String productName;
-     double productPrice;
+     Double productPrice;
      String productDescription;
      List<String> categories;
      LocalDateTime createdAt;
