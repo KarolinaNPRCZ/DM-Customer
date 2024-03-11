@@ -2,6 +2,7 @@ package com.nprcz.dmcustomer.product;
 
 import lombok.Builder;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,5 +13,5 @@ public record ProductDTO(Integer productSKUId,
                          String productDescription,
                          List<String> categories,
                          LocalDateTime createdAt,
-                         LocalDateTime updatedAt) {
+                         LocalDateTime updatedAt) implements Serializable {
 }
