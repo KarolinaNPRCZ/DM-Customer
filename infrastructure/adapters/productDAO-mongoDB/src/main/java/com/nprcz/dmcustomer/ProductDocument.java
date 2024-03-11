@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+@Document(collection = "products")
 @Builder(toBuilder = true)
 class ProductDocument {
      @Id
