@@ -2,14 +2,14 @@ package com.nprcz.dmcustomer;
 
 import com.nprcz.dmcustomer.ports.in.product.ProductManagementControllerPort;
 import com.nprcz.dmcustomer.ports.out.product.ProductService;
+import com.nprcz.dmcustomer.product.ProductDTO;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/product")
@@ -26,23 +26,41 @@ class ProductManagementController implements ProductManagementControllerPort<Res
     @Override
     @PostMapping("/create")
     public ResponseEntity<Integer> createProduct(@Valid @RequestBody ProductCreateRequest productCreateRequest) {
-        log.info("Handle Request = ProductManagementController");
+        log.info("Handle Request = ProductManagementController: createProduct method");
         Integer register = productService.createProduct(productCreateRequestToProductMapper.toProductDTO(productCreateRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(register);
     }
 
     @Override
-    public ResponseEntity<?> getProductBySKU(Integer SKU) {
-        return null;
+    @GetMapping("/{SKU}")
+    public ResponseEntity<ProductDTO> getProductBySKU(@PathVariable Integer SKU) {
+        log.info("Trying to find product with sku: {}...", SKU);
+       ProductDTO productDTO = productService.getProductBySKUId(SKU);
+
+        log.info("Product has successfully find: {}", productDTO);
+        return ResponseEntity.ok(productDTO);
+
     }
 
     @Override
-    public ResponseEntity<?> getAllProducts() {
-        return null;
+    @GetMapping
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        log.info("Trying to find all products...");
+        List<ProductDTO> products = productService.getAllProducts();
+        log.info("User has successfully got all products");
+        return ResponseEntity.ok(
+                products
+        );
+
     }
 
     @Override
-    public ResponseEntity<?> getProductByName(String name) {
-        return null;
+    @GetMapping("/find/{productName}")
+    public ResponseEntity<ProductDTO> getProductByName(@PathVariable String productName) {
+        log.info("Trying to find product with name: {}...", productName);
+        ProductDTO productDTO = productService.getProductByName(productName);
+        log.info("Product has successfully find: {}", productDTO);
+
+        return ResponseEntity.ok(productDTO);
     }
 }

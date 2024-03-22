@@ -19,7 +19,6 @@ import java.util.List;
 class ProductCreateRequest {
 
     @NotNull(message = "{not.null}")
-    @NotBlank(message = "{not.blank}")
     @JsonProperty("sku")
     Integer productSKUId;
 
@@ -29,7 +28,6 @@ class ProductCreateRequest {
     String productName;
 
     @NotNull(message = "{not.null}")
-    @NotBlank(message = "{not.blank}")
     @JsonProperty("price")
     Double productPrice;
 
