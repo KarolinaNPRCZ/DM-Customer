@@ -1,8 +1,7 @@
 package com.nprcz.dmcustomer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +19,7 @@ class ProductCreateRequest {
 
     @NotNull(message = "{not.null}")
     @JsonProperty("sku")
+    @PositiveOrZero
     Integer productSKUId;
 
     @NotNull(message = "{not.null}")
@@ -29,6 +29,8 @@ class ProductCreateRequest {
 
     @NotNull(message = "{not.null}")
     @JsonProperty("price")
+    @DecimalMin("00.00")
+    @DecimalMax("10000.00")
     Double productPrice;
 
     @NotNull(message = "{not.null}")

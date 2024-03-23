@@ -8,5 +8,5 @@ public interface ProductManagementControllerPort<RP, RQ> {
 
     RP getAllProducts();
 
-    RP getProductByName(String name);
+    RP getProductsByName(String name);
 }

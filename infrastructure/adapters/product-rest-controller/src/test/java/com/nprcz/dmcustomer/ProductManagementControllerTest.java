@@ -2,6 +2,7 @@ package com.nprcz.dmcustomer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nprcz.dmcustomer.ports.out.product.ProductService;
+import jakarta.validation.constraints.NotNull;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.List;
 
@@ -23,7 +25,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @ContextConfiguration(classes = ProductManagementControllerTestConfig.class)
 @AutoConfigureMockMvc(addFilters = false)
 class ProductManagementControllerTest {
-    //TODO refactor test method
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,18 +38,17 @@ class ProductManagementControllerTest {
 
     @Test
     void should_successfully_createProduct_by_invoking_create_product_method_in_ProductService() throws Exception {
+       //GIVEN
         ProductCreateRequest productCreateRequest = ProductCreateRequest.builder()
                 .productSKUId(1)
                 .productName("Premium A4 Copy Paper")
                 .productPrice(14.10)
                 .productDescription("High-quality A4 copy paper suitable for home and office use.")
                 .categories(List.of("office", "stationery")).build();
-
-        ResultActions resultActions = mockMvc.perform(post("/product/create")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper
-                        .writeValueAsString(productCreateRequest)));
-
+        //WHEN
+        ResultActions resultActions = getResultActions(post("/product/create"),objectMapper
+                .writeValueAsString(productCreateRequest));
+        //THEN
         verify(productService, times(1)).createProduct(Mockito.any());
         assertThat(resultActions.andReturn()
                 .getResponse()
@@ -59,7 +59,7 @@ class ProductManagementControllerTest {
     @Test
     void should_successfully_getProduct_by_invoking_getProductBySku_method_in_ProductService() throws Exception {
         //GIVEN
-        Integer SKU = 1;
+        int SKU = 1;
         //WHEN
         ResultActions resultActions = mockMvc.perform(get("/product/" + SKU));
 
@@ -91,17 +91,23 @@ class ProductManagementControllerTest {
         //GIVEN
         String productName = "test";
         // WHEN
-        ResultActions resultActions = mockMvc.perform(get("/product/find/{}").contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper
-                        .writeValueAsString(productName)));
+        ResultActions resultActions = getResultActions(get("/product/find/{}"),objectMapper
+                .writeValueAsString(productName));
 
 
         //THEN
-        verify(productService, times(1)).getProductByName(Mockito.any());
+        verify(productService, times(1)).getProductsByName(Mockito.any());
         assertThat(resultActions.andReturn()
                 .getResponse()
                 .getStatus())
                 .isEqualTo(200);
+    }
+
+    @NotNull
+    private ResultActions getResultActions(MockHttpServletRequestBuilder mockHttpServletRequestBuilder, String objectMapper) throws Exception {
+        return mockMvc.perform(mockHttpServletRequestBuilder
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper));
     }
 
 

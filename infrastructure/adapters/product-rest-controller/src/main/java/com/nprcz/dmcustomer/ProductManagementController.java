@@ -56,9 +56,9 @@ class ProductManagementController implements ProductManagementControllerPort<Res
 
     @Override
     @GetMapping("/find/{productName}")
-    public ResponseEntity<ProductDTO> getProductByName(@PathVariable String productName) {
+    public ResponseEntity<List<ProductDTO>> getProductsByName(@PathVariable String productName) {
         log.info("Trying to find product with name: {}...", productName);
-        ProductDTO productDTO = productService.getProductByName(productName);
+        List<ProductDTO> productDTO = productService.getProductsByName(productName);
         log.info("Product has successfully find: {}", productDTO);
 
         return ResponseEntity.ok(productDTO);
