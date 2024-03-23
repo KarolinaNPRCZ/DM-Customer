@@ -18,5 +18,4 @@ class ProductDAOImplConfig {
         return new ProductDAOImpl(productDocumentMapper, productDocumentRepository);
     }
 
-
 }
