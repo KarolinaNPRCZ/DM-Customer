@@ -1,6 +1,7 @@
 package com.nprcz.dmcustomer.product;
 
 import lombok.Builder;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
