@@ -21,7 +21,7 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
     @DynamicPropertySource
     protected static void propertyOverride(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", postgresContainer::getJdbcUrl);
-        registry.add("spring.data.mongodb.uri",mongoDbContainer::getReplicaSetUrl);
+        registry.add("spring.data.mongodb.uri", mongoDbContainer::getReplicaSetUrl);
     }
 
     @Autowired
@@ -32,6 +32,11 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
     private String wrongUserEmail;
     private String fieldMustBeEqual;
     private String wrongPassword;
+
+    private String validationPositiveOrZero;
+    private String validationDecimalMin;
+    private String validationDecimalMax;
+
 
     @BeforeEach
     void setUp() {
@@ -52,6 +57,15 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
         );
         this.wrongPassword = messageSource.getMessage(
                 "wrong.password", null, Locale.ENGLISH
+        );
+        this.validationPositiveOrZero = messageSource.getMessage(
+                "validation.positive.or.zero", null, Locale.ENGLISH
+        );
+        this.validationDecimalMin = messageSource.getMessage(
+                "validation.decimal.min", null, Locale.ENGLISH
+        );
+        this.validationDecimalMax = messageSource.getMessage(
+                "validation.decimal.max", null, Locale.ENGLISH
         );
     }
 
@@ -167,6 +181,117 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.errors[0].field").value("userPassword"))
                 .andExpect(jsonPath("$.errors[0].messages[0]").value(wrongPassword));
+
+
+    }
+
+    @Test
+    void should_handle_BAD_REQUEST_caused_by_missing_parameters_of_product_create_request() throws Exception {
+        // GIVEN && WHEN
+        ResultActions response = mockMvc.perform(post("/product/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{}"));
+
+        // THEN
+        response.andExpectAll(
+                jsonPath(
+                        "$.errors[?(@.field=='productSKUId')].messages[*]",
+                        containsInAnyOrder(fieldMustBeNotNull)
+                ),
+                jsonPath(
+                        "$.errors[?(@.field=='productPrice')].messages[*]",
+                        containsInAnyOrder(fieldMustBeNotNull)
+                ),
+                jsonPath(
+                        "$.errors[?(@.field=='productName')].messages[*]",
+                        containsInAnyOrder(fieldMustBeNotBlank, fieldMustBeNotNull)
+                ),
+                jsonPath(
+                        "$.errors[?(@.field=='productDescription')].messages[*]",
+                        containsInAnyOrder(fieldMustBeNotNull)
+                ),
+
+                jsonPath(
+                        "$.errors[?(@.field=='categories')].messages[*]",
+                        containsInAnyOrder(fieldMustBeNotNull)
+                )
+        );
+
+    }
+
+    @Test
+    void should_handle_BAD_REQUEST_caused_by_not_matches_productSKUId_of_product_register_request() throws Exception {
+        // GIVEN && WHEN
+        ResultActions response = mockMvc.perform(post("/product/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                       {
+                        "sku": -52,
+                        "name": "Premium A4 Copy Paper",
+                        "price": 14.10,
+                        "description": "High-quality A4 copy paper suitable for home and office use.",
+                        "categories": ["office", "stationery"]
+       
+                       }
+                            """.trim()));
+        // THEN
+        response.andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath(
+                        "$.errors[?(@.field=='productSKUId')].messages[*]",
+                        containsInAnyOrder(validationPositiveOrZero)
+                ));
+
+
+    }
+    @Test
+    void should_handle_BAD_REQUEST_caused_by_not_matches_min_productPrice_of_product_register_request() throws Exception {
+        // GIVEN && WHEN
+        ResultActions response = mockMvc.perform(post("/product/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                       {
+                        "sku": 2,
+                        "name": "Premium A4 Copy Paper",
+                        "price": -14.10,
+                        "description": "High-quality A4 copy paper suitable for home and office use.",
+                        "categories": ["office", "stationery"]
+       
+                       }
+                            """.trim()));
+        // THEN
+        response.andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath(
+                        "$.errors[?(@.field=='productPrice')].messages[*]",
+                        containsInAnyOrder(validationDecimalMin.replace("{value}","0.00"))
+                ));
+
+
+    }
+
+    @Test
+    void should_handle_BAD_REQUEST_caused_by_not_matches_max_productPrice_of_product_register_request() throws Exception {
+        // GIVEN && WHEN
+        ResultActions response = mockMvc.perform(post("/product/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                       {
+                        "sku": 2,
+                        "name": "Premium A4 Copy Paper",
+                        "price": 14000.10,
+                        "description": "High-quality A4 copy paper suitable for home and office use.",
+                        "categories": ["office", "stationery"]
+       
+                       }
+                            """.trim()));
+        // THEN
+        response.andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath(
+                        "$.errors[?(@.field=='productPrice')].messages[*]",
+                        containsInAnyOrder(validationDecimalMax.replace("{value}","10000.00"))
+                ));
 
 
     }

@@ -35,7 +35,7 @@ class ProductDocumentMapperTest implements SamplesProductsResponse {
     @Test
     void should_successfully_map_To_ProductDocument_From_ProductDTO() {
         //Given && WHEN
-        ProductDocument mappedProductDocument = productDocumentMapper.mapToProductDocumentFromProductDTO(productDTO);
+        ProductDocument mappedProductDocument = productDocumentMapper.fromProductDTO(productDTO);
         //THEN
         assertThat(mappedProductDocument).usingRecursiveComparison().ignoringFields("id").isEqualTo(productDocument);
     }

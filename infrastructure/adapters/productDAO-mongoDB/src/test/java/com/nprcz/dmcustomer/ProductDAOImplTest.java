@@ -2,7 +2,6 @@ package com.nprcz.dmcustomer;
 
 import com.nprcz.dmcustomer.product.ProductAlreadyExistsException;
 import com.nprcz.dmcustomer.product.ProductDTO;
-import com.nprcz.dmcustomer.user.DTO.UserDTO;
 import com.nprcz.dmcustomer.utils.productutils.SamplesProductsResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import org.springframework.dao.DuplicateKeyException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -40,14 +38,14 @@ class ProductDAOImplTest implements SamplesProductsResponse {
         ProductDocument productDocument = new ProductDocument();
         productDocument.setProductSKUId(1);
         ProductDTO productDTO = oneProductDocumentDTO();
-        when(productDocumentMapper.mapToProductDocumentFromProductDTO(productDTO)).thenReturn(productDocument);
+        when(productDocumentMapper.fromProductDTO(productDTO)).thenReturn(productDocument);
         when(productDocumentRepository.save(productDocument)).thenReturn(productDocument);
 
         //WHEN
         Integer productId = productDAOImpl.save(productDTO);
         //THEN
         assertEquals(1,productId);
-        verify(productDocumentMapper,times(1)).mapToProductDocumentFromProductDTO(productDTO);
+        verify(productDocumentMapper,times(1)).fromProductDTO(productDTO);
         verify(productDocumentRepository,times(1)).save(productDocument);
 
     }
@@ -57,7 +55,7 @@ class ProductDAOImplTest implements SamplesProductsResponse {
         // GIVEN
         ProductDTO productDTO = oneProductDocumentDTO();
         ProductDocument productDocument = new ProductDocument();
-        when(productDocumentMapper.mapToProductDocumentFromProductDTO(productDTO))
+        when(productDocumentMapper.fromProductDTO(productDTO))
                 .thenReturn(productDocument);
         when(productDocumentRepository.save(productDocument))
                 .thenThrow(DuplicateKeyException.class);
@@ -68,7 +66,7 @@ class ProductDAOImplTest implements SamplesProductsResponse {
                 () -> productDAOImpl.save(productDTO)
         );
         verify(productDocumentMapper, times(1))
-                .mapToProductDocumentFromProductDTO(productDTO);
+                .fromProductDTO(productDTO);
         verify(productDocumentRepository, times(1))
                 .save(productDocument);
     }
@@ -120,14 +118,14 @@ class ProductDAOImplTest implements SamplesProductsResponse {
 
 
         when(productDocumentMapper
-                .mapToProductDocumentFromProductDTO(productDTO))
+                .fromProductDTO(productDTO))
                 .thenReturn(productDocument);
 
         //WHEN
          productDAOImpl.deleteProduct(productDTO);
         //THEN
         verify(productDocumentRepository, times(1)).deleteByProductSKUId(productDTO.productSKUId());
-        verify(productDocumentMapper, times(1)).mapToProductDocumentFromProductDTO(any());
+        verify(productDocumentMapper, times(1)).fromProductDTO(any());
 
 
     }

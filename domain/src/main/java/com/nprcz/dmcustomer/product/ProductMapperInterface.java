@@ -7,5 +7,5 @@ public interface ProductMapperInterface<T> extends Function<T,ProductDTO>, Seria
     default ProductDTO mapToProductDTOFrom(T t){
         return apply(t);
     }
-    T mapToProductDocumentFromProductDTO(ProductDTO productDTO);
+    T fromProductDTO(ProductDTO productDTO);
 }

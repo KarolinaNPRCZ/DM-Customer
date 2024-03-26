@@ -12,7 +12,7 @@ import java.util.function.Function;
 final class ProductDocumentMapper implements Function<ProductDocument, ProductDTO>, ProductMapperInterface<ProductDocument> {
 
     @Override
-    public ProductDocument mapToProductDocumentFromProductDTO(ProductDTO productDTO) {
+    public ProductDocument fromProductDTO(ProductDTO productDTO) {
         String uniqueID = productDTO.id();
         if (uniqueID == null) {
             uniqueID = UUID.randomUUID().toString();

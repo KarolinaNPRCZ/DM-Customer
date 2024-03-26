@@ -24,7 +24,7 @@ class ProductDAOImpl implements ProductDAOPort {
 
     @Override
     public Integer save(ProductDTO productDTO) {
-        ProductDocument productDocument = productDocumentMapper.mapToProductDocumentFromProductDTO(productDTO);
+        ProductDocument productDocument = productDocumentMapper.fromProductDTO(productDTO);
         log.info("productDocumentDAO try save product to database");
         ProductDocument savedProductDocument;
         try {
@@ -40,7 +40,7 @@ class ProductDAOImpl implements ProductDAOPort {
 
     @Override
     public Integer deleteProduct(ProductDTO productDTO) {
-        ProductDocument productDocument = productDocumentMapper.mapToProductDocumentFromProductDTO(productDTO);
+        ProductDocument productDocument = productDocumentMapper.fromProductDTO(productDTO);
         productDocumentRepository.deleteByProductSKUId(productDocument.productSKUId);
         log.info("Product deleted successfully");
         return productDocument.productSKUId;

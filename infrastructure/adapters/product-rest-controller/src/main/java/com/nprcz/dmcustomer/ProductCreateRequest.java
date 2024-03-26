@@ -19,7 +19,7 @@ class ProductCreateRequest {
 
     @NotNull(message = "{not.null}")
     @JsonProperty("sku")
-    @PositiveOrZero
+    @PositiveOrZero(message = "{validation.positive.or.zero}")
     Integer productSKUId;
 
     @NotNull(message = "{not.null}")
@@ -29,8 +29,8 @@ class ProductCreateRequest {
 
     @NotNull(message = "{not.null}")
     @JsonProperty("price")
-    @DecimalMin("00.00")
-    @DecimalMax("10000.00")
+    @DecimalMin(value = "0.00",message = "{validation.decimal.min}")
+    @DecimalMax(value = "10000.00",message = "{validation.decimal.max}")
     Double productPrice;
 
     @NotNull(message = "{not.null}")

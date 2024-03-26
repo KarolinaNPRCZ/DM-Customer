@@ -26,7 +26,14 @@ import org.springframework.stereotype.Service;
         return apply(productCreateRequest); }
 
     @Override
-    public ProductCreateRequest mapToProductDocumentFromProductDTO(ProductDTO productDTO) {
-        return null;
+    public ProductCreateRequest fromProductDTO(ProductDTO productDTO) {
+        return new ProductCreateRequest()
+                .toBuilder()
+                .productName(productDTO.productName())
+                .productPrice(productDTO.productPrice())
+                .productSKUId(productDTO.productSKUId())
+                .productDescription(productDTO.productDescription())
+                .categories(productDTO.categories())
+                .build();
     }
 }

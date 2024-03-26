@@ -13,6 +13,7 @@ import java.util.Locale;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
 @ContextConfiguration(classes = {
@@ -36,7 +37,12 @@ class MessageTest {
             String invalidFormatErrorMessage,
             String notEqualErrorMessage,
             String wrongEmailPatternErrorMessage,
-            String wrongPasswordErrorMessage
+            String wrongPasswordErrorMessage,
+            String validationPositiveOrZero,
+            String validationDecimalMin,
+            String validationDecimalMax
+
+
     ) {
         // GIVEN && WHEN
         String notNullResolvedMessage = messageSource.getMessage(
@@ -60,6 +66,16 @@ class MessageTest {
         String notEqualResolvedMessage = messageSource.getMessage(
                 "not.equal", null, local
         );
+        String validationPositiveOrZeroResolvedMessage = messageSource.getMessage(
+                "validation.positive.or.zero", null, local
+        );
+        String validationDecimalMinResolvedMessage = messageSource.getMessage(
+                "validation.decimal.min", null, local
+        );
+        String validationDecimalMaxResolvedMessage = messageSource.getMessage(
+                "validation.decimal.max", null, local
+        );
+
 
         // THEN
         assertThat(notNullResolvedMessage)
@@ -81,6 +97,19 @@ class MessageTest {
         assertThat(notEqualErrorMessage)
                 .isEqualTo(notEqualResolvedMessage
                 );
+
+        assertThat(validationPositiveOrZero)
+                .isEqualTo(validationPositiveOrZeroResolvedMessage
+                );
+
+        assertThat(validationDecimalMin)
+                .isEqualTo(validationDecimalMinResolvedMessage
+                );
+
+        assertThat(validationDecimalMax)
+                .isEqualTo(validationDecimalMaxResolvedMessage
+                );
+
     }
 
     private Stream<Arguments> getMessages() {
@@ -93,7 +122,10 @@ class MessageTest {
                         messagesDTO.getInvalidFormatMessage(),
                         messagesDTO.getNotEqualMessage(),
                         messagesDTO.getWrongEmailPatternMessage(),
-                        messagesDTO.getWrongPasswordMessage()
+                        messagesDTO.getWrongPasswordMessage(),
+                        messagesDTO.getValidationPositiveOrZero(),
+                        messagesDTO.getValidationDecimalMin(),
+                        messagesDTO.getValidationDecimalMax()
 
 
                 )
