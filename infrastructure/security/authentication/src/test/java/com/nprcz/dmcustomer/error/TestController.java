@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class TestController {
+ class TestController {
     @PostMapping("/login")
     BadCredentialsResponseDTO testEndpointTestValidation(@RequestBody LoginRequest loginRequest){
         if (loginRequest.userEmail().equals("testEmail")) {

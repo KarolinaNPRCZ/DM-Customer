@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 class ProductManagementFacadeConfig {
 
     @Bean
-    ProductService UserControllerPort(ProductDAOPort productDAOPort) {
-        return new ProductManagementFacade(productDAOPort);
+    ProductService productControllerPort(ProductDAOPort productDAO) {
+        return new ProductManagementFacade(productDAO);
     }
 
 

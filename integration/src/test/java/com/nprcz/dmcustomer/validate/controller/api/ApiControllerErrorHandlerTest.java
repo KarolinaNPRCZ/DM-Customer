@@ -21,6 +21,7 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
     @DynamicPropertySource
     protected static void propertyOverride(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", postgresContainer::getJdbcUrl);
+        registry.add("spring.data.mongodb.uri",mongoDbContainer::getReplicaSetUrl);
     }
 
     @Autowired

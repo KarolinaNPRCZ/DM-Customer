@@ -20,6 +20,7 @@ class ProductDocumentMapperTest implements SamplesProductsResponse {
     void setUp() {
         this.productDocumentMapper = new ProductDocumentMapper();
         productDocument = ProductDocument.builder()
+                .id("testID")
                 .productSKUId(1)
                 .productName("Premium A4 Copy Paper")
                 .productPrice(14.10)
@@ -28,6 +29,7 @@ class ProductDocumentMapperTest implements SamplesProductsResponse {
                 .createdAt(LocalDateTime.of(2024, 3, 11, 12, 10))
                 .updatedAt(LocalDateTime.of(2024, 3, 11, 12, 10).plusHours(24)).build();
         productDTO = oneProductDocumentDTO();
+        productDTO.toBuilder().id("testID").build();
     }
 
     @Test
@@ -35,6 +37,13 @@ class ProductDocumentMapperTest implements SamplesProductsResponse {
         //Given && WHEN
         ProductDocument mappedProductDocument = productDocumentMapper.mapToProductDocumentFromProductDTO(productDTO);
         //THEN
-        assertThat(mappedProductDocument).usingRecursiveComparison().isEqualTo(productDocument);
+        assertThat(mappedProductDocument).usingRecursiveComparison().ignoringFields("id").isEqualTo(productDocument);
+    }
+    @Test
+    void should_successfully_map_To_ProductDTO_From_ProductDocument() {
+        //Given && WHEN
+        ProductDTO mappedProductDTO = productDocumentMapper.apply(productDocument);
+        //THEN
+        assertThat(mappedProductDTO).usingRecursiveComparison().ignoringFields("id").isEqualTo(productDTO);
     }
 }

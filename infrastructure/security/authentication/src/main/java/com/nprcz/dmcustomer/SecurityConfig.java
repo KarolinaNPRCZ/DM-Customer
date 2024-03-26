@@ -25,7 +25,7 @@ class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
-    private static final String[] WHITE_LIST_URL = {"/users/register"};
+    private static final String[] WHITE_LIST_URL = {"/users/register","/product/{SKU}","/product","/product/find/{productName}"};
 
 
     @Bean

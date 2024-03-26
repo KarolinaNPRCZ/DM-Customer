@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     @DynamicPropertySource
     protected static void propertyOverride(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", postgresContainer::getJdbcUrl);
+        registry.add("spring.data.mongodb.uri",mongoDbContainer::getReplicaSetUrl);
     }
 
     @Autowired

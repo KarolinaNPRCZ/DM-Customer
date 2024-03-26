@@ -22,6 +22,11 @@ class InMemoryDataBaseProductAdapter implements ProductDAOPort {
     }
 
     @Override
+    public Integer deleteProduct(ProductDTO productDTO) {
+      return 1;
+    }
+
+    @Override
     public Optional<ProductDTO> findProductBySKUId(Integer SKU) {
         return productsDTOMap.values()
                 .stream()

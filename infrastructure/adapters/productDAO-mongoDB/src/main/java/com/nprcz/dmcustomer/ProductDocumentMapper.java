@@ -1,30 +1,49 @@
 package com.nprcz.dmcustomer;
 
 import com.nprcz.dmcustomer.product.ProductDTO;
+import com.nprcz.dmcustomer.product.ProductMapperInterface;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Service;
 
+import java.util.UUID;
 import java.util.function.Function;
 
 
 @Log4j2
-@Service
-class ProductDocumentMapper implements Function<ProductDTO, ProductDocument> {
+final class ProductDocumentMapper implements Function<ProductDocument, ProductDTO>, ProductMapperInterface<ProductDocument> {
 
     @Override
-    public ProductDocument apply(ProductDTO productDTO) {
-        return new ProductDocument(
-                productDTO.productSKUId(),
-                productDTO.productName(),
-                productDTO.productPrice(),
-                productDTO.productDescription(),
-                productDTO.categories(),
-                productDTO.createdAt(),
-                productDTO.updatedAt());
+    public ProductDocument mapToProductDocumentFromProductDTO(ProductDTO productDTO) {
+        String uniqueID = productDTO.id();
+        if (uniqueID == null) {
+            uniqueID = UUID.randomUUID().toString();
+        }
+        return ProductDocument.builder()
+                .id(uniqueID)
+                .productSKUId(productDTO.productSKUId())
+                .productName(productDTO.productName())
+                .productDescription(productDTO.productDescription())
+                .productPrice(productDTO.productPrice())
+                .categories(productDTO.categories())
+                .createdAt(productDTO.createdAt())
+                .updatedAt(productDTO.updatedAt())
+                .build();
+
 
     }
 
-    ProductDocument mapToProductDocumentFromProductDTO(ProductDTO productDTO) {
-        return apply(productDTO);
+    @Override
+    public ProductDTO apply(ProductDocument productDocument) {
+        return ProductDTO.builder()
+                .id(productDocument.id)
+                .productSKUId(productDocument.productSKUId)
+                .productName(productDocument.productName)
+                .productPrice(productDocument.productPrice)
+                .productDescription(productDocument.productDescription)
+                .categories(productDocument.categories)
+                .createdAt(productDocument.createdAt)
+                .updatedAt(productDocument.updatedAt)
+                .build();
     }
+
+
 }
