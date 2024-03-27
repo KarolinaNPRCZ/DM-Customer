@@ -13,7 +13,6 @@ import java.util.Collections;
 
 @ControllerAdvice
  class AuthControllerErrorHandler {
-   //todo add test for sec meth
     @LogHandlerMethodExec(
             loggerName = "AuthControllerErrorHandler",
             handlerClazz = AuthControllerErrorHandler.class,

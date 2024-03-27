@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     @Test
     void should_return_UNAUTHORIZED_because_of_nonexistent_user_in_database() throws Exception {
         // GIVEN && WHEN
-        ResultActions response = mockMvc.perform(post("/login/user")
+        ResultActions response = mockMvc.perform(post("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.format("""
                             {
@@ -53,7 +53,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         userService.createUser("test@existsuser.com", "Password10");
 
         // GIVEN && WHEN
-        ResultActions response = mockMvc.perform(post("/login/user")
+        ResultActions response = mockMvc.perform(post("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(String.format("""
                             {
