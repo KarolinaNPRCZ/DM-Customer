@@ -3,7 +3,7 @@ package com.nprcz.dmcustomer;
 import com.nprcz.dmcustomer.product.ProductMapperInterface;
 import com.nprcz.dmcustomer.product.ProductDTO;
 import org.springframework.stereotype.Service;
-//TODO ProductMapperInterface
+//TODO add test method
 @Service
  class ProductCreateRequestToProductMapper implements ProductMapperInterface<ProductCreateRequest> {
 
