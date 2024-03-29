@@ -56,6 +56,7 @@ class ProductManagementController implements ProductManagementControllerPort<Res
 
     }
 
+
     @Override
     @GetMapping("/find/{productName}")
     public ResponseEntity<List<ProductDTO>> getProductsByName(@PathVariable String productName) {
