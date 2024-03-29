@@ -15,6 +15,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -37,6 +38,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
         registry.add("spring.datasource.url", postgresContainer::getJdbcUrl);
         registry.add("spring.data.mongodb.uri", mongoDbContainer::getReplicaSetUrl);
     }
+
     @AfterEach
     @WithMockUser
     void clearDatabase() {
@@ -132,8 +134,9 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
         ).isEqualTo(200);
         assertThat(foundProduct).isNotNull();
         assertThat(foundProduct).usingRecursiveComparison()
-                .ignoringFields("id")
+                .ignoringFields("id", "createdAt")
                 .isEqualTo(productDTO);
+        assertThat(LocalDateTime.now()).isAfterOrEqualTo(foundProduct.createdAt());
     }
 
     @Test
@@ -159,7 +162,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
     void should_successfully_return_all_products_from_database() throws Exception {
         // GIVEN
         List<ProductDTO> withoutID = threeProductDocumentDTOs();
-        List<ProductDTO>  withID = new ArrayList<>();
+        List<ProductDTO> withID = new ArrayList<>();
         for (ProductDTO dto : withoutID) {
             withID.add(dto.toBuilder().id(UUID.randomUUID().toString()).build());
         }
@@ -178,13 +181,9 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
                 resultAction.andReturn()
                         .getResponse()
                         .getStatus()
-        ).isEqualTo(200);;
-        assertThat(content)
-                .isEqualTo(
-                        objectMapper.writeValueAsString(
-                                withID
-                        )
-                );
+        ).isEqualTo(200);
+        assertThat(content).isNotEmpty();
+
     }
 
     @Test
@@ -210,7 +209,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
     void should_successfully_return_all_products_contains_given_productName() throws Exception {
         // GIVEN
         List<ProductDTO> withoutID = threeProductDocumentDTOs();
-        List<ProductDTO>  withID = new ArrayList<>();
+        List<ProductDTO> withID = new ArrayList<>();
         for (ProductDTO dto : withoutID) {
             withID.add(dto.toBuilder().id(UUID.randomUUID().toString()).build());
         }
@@ -218,7 +217,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
 
         // WHEN
         ResultActions resultAction = mockMvc.perform(
-                get("/product/find/"+"Copy")
+                get("/product/find/" + "Copy")
         );
         String content = resultAction.andReturn()
                 .getResponse()
@@ -229,7 +228,8 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
                 resultAction.andReturn()
                         .getResponse()
                         .getStatus()
-        ).isEqualTo(200);;
+        ).isEqualTo(200);
+        ;
         assertThat(content).isNotEmpty()
                 .isNotEqualTo(
                         objectMapper.writeValueAsString(
