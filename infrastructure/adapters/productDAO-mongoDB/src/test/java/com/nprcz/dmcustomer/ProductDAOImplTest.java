@@ -13,6 +13,7 @@ import org.springframework.dao.DuplicateKeyException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -36,15 +37,15 @@ class ProductDAOImplTest implements SamplesProductsResponse {
     void should_successfully_save_product_and_return_product_id(){
         //GIVEN
         ProductDocument productDocument = new ProductDocument();
-        productDocument.setProductSKUId(1);
+        productDocument.setId(UUID.randomUUID().toString());
         ProductDTO productDTO = oneProductDocumentDTO();
         when(productDocumentMapper.fromProductDTO(productDTO)).thenReturn(productDocument);
         when(productDocumentRepository.save(productDocument)).thenReturn(productDocument);
 
         //WHEN
-        Integer productId = productDAOImpl.save(productDTO);
+        String productId = productDAOImpl.save(productDTO);
         //THEN
-        assertEquals(1,productId);
+        assertEquals(productDocument.id ,productId);
         verify(productDocumentMapper,times(1)).fromProductDTO(productDTO);
         verify(productDocumentRepository,times(1)).save(productDocument);
 

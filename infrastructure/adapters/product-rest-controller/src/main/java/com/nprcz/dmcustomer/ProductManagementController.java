@@ -28,10 +28,10 @@ class ProductManagementController implements ProductManagementControllerPort<Res
     @Override
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Integer> createProduct(@Valid @RequestBody ProductCreateRequest productCreateRequest) {
+    public ResponseEntity<String> createProduct(@Valid @RequestBody ProductCreateRequest productCreateRequest) {
         log.info("Handle Request = ProductManagementController: createProduct method");
-        Integer register = productService.createProduct(productCreateRequestToProductMapper.mapToProductDTOFrom(productCreateRequest));
-        return ResponseEntity.status(HttpStatus.CREATED).body(register);
+        String productUUID = productService.createProduct(productCreateRequestToProductMapper.mapToProductDTOFrom(productCreateRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(productUUID);
     }
 
     @Override

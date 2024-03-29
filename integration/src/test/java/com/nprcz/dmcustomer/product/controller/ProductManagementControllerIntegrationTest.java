@@ -57,7 +57,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
         String resultAsString = resultActions.andReturn()
                 .getResponse()
                 .getContentAsString();
-        ProductDTO foundProduct = productService.getProductBySKUId(Integer.valueOf(resultAsString));
+        ProductDTO foundProduct = productService.getProductBySKUId(1);
         // THEN
         assertAll(() -> {
             assertThat(
@@ -66,7 +66,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
                             .getStatus()
             ).isEqualTo(201);
             assertThat(foundProduct).isNotNull();
-            assertThat(foundProduct.productSKUId()).isEqualTo(Integer.valueOf(resultAsString));
+            assertThat(foundProduct.id()).isEqualTo(resultAsString);
 
         });
 
@@ -115,9 +115,9 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
         ProductDTO productDTO = oneProductDocumentDTO();
 
         // WHEN
-        Integer SKUIdSavedProduct = productService.createProduct(productDTO);
+        String SKUIdSavedProduct = productService.createProduct(productDTO);
         ResultActions resultActions = mockMvc.perform(
-                get("/product/" + SKUIdSavedProduct)
+                get("/product/" + productDTO.productSKUId())
         );
         String resultAsString = resultActions.andReturn()
                 .getResponse()

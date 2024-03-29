@@ -13,7 +13,7 @@ public class ProductManagementFacade implements ProductService {
     }
 
     @Override
-    public Integer createProduct(ProductDTO productDTO) {
+    public String createProduct(ProductDTO productDTO) {
         return productDAO.save(productDTO);
     }
 

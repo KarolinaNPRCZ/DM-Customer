@@ -23,7 +23,7 @@ class ProductDAOImpl implements ProductDAOPort {
     }
 
     @Override
-    public Integer save(ProductDTO productDTO) {
+    public String save(ProductDTO productDTO) {
         ProductDocument productDocument = productDocumentMapper.fromProductDTO(productDTO);
         log.info("productDocumentDAO try save product to database");
         ProductDocument savedProductDocument;
@@ -35,7 +35,7 @@ class ProductDAOImpl implements ProductDAOPort {
             throw new ProductAlreadyExistsException(productDocument.productSKUId);
         }
         log.info("productDocumentDAO save product to database");
-        return savedProductDocument.productSKUId;
+        return savedProductDocument.id;
     }
 
     @Override
@@ -58,11 +58,12 @@ class ProductDAOImpl implements ProductDAOPort {
     public List<ProductDTO> findProductsByName(String productName) {
 
         log.info("ProductDAO trying to find products with " + productName);
-         List<ProductDTO> productsDocument = productDocumentRepository
-                 .getProductDocumentsByProductNameContainsIgnoreCase(productName)
-                 .stream()
-                 .map(productDocumentMapper)
-                 .toList();;
+        List<ProductDTO> productsDocument = productDocumentRepository
+                .getProductDocumentsByProductNameContainsIgnoreCase(productName)
+                .stream()
+                .map(productDocumentMapper)
+                .toList();
+        ;
         log.info("ProductDAO found products with " + productName);
         return productsDocument;
     }

@@ -20,7 +20,7 @@ class ProductManagementFacadeTest implements SamplesProductsResponse {
     @BeforeEach
     void setUp() {
 
-        List<Integer> SKUs =
+        List<String> UUID =
                 productDTOs.stream()
                         .map(productManagementFacade::createProduct)
                         .toList();
@@ -33,14 +33,15 @@ class ProductManagementFacadeTest implements SamplesProductsResponse {
         ProductDTO productDTO = oneProductDocumentDTO();
         productDTO.toBuilder().productSKUId(19);
         //WHEN
-        Integer SKU = productManagementFacade.createProduct(productDTO);
-        ProductDTO recivedProductDTO = productManagementFacade.getProductBySKUId(SKU);
+        String UUID = productManagementFacade.createProduct(productDTO);
+        ProductDTO recivedProductDTO = productManagementFacade.getProductBySKUId(productDTO.productSKUId());
         //THEN
         assertEquals(0,
                 new ProductComparator().compare(
                         productDTO,
                         recivedProductDTO
                 ));
+        assertEquals(UUID,recivedProductDTO.id());
     }
 
     @Test
@@ -77,5 +78,7 @@ class ProductManagementFacadeTest implements SamplesProductsResponse {
         Assertions.assertThrows(ProductAlreadyExistsException.class,
                 () -> productManagementFacade.createProduct(productDTO));
     }
+
+
 
 }
