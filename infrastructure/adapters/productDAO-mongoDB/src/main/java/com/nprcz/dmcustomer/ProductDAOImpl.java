@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DuplicateKeyException;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ class ProductDAOImpl implements ProductDAOPort {
         log.info("productDocumentDAO try save product to database");
         ProductDocument savedProductDocument;
         try {
-            productDocument.setCreatedAt(LocalDateTime.now());
+            productDocument.setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS));
             savedProductDocument = productDocumentRepository.save(productDocument);
 
         } catch (
