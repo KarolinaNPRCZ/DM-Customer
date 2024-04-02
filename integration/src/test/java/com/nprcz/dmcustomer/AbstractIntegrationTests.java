@@ -13,6 +13,7 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
@@ -31,6 +32,12 @@ public class AbstractIntegrationTests {
                     DockerImageName.parse("postgres:15.2")
             ).withInitScript("init-test-data.sql");
 
+    @Container
+    protected static MongoDBContainer mongoDbContainer =
+            new MongoDBContainer(
+                    DockerImageName.parse("mongo:4.0.10")
+            );
+
     @RegisterExtension
     protected static WireMockExtension wireMockServer = WireMockExtension.newInstance()
             .options(WireMockConfiguration.wireMockConfig().dynamicPort())
@@ -39,6 +46,7 @@ public class AbstractIntegrationTests {
     @DynamicPropertySource
     private static void propertyOverride(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", postgresContainer::getJdbcUrl);
+        registry.add("spring.data.mongodb.uri",mongoDbContainer::getReplicaSetUrl);
     }
 
     @Autowired

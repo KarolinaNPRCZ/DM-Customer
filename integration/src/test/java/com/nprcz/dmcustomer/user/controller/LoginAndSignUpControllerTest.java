@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class LoginAndSignUpControllerTest extends AbstractIntegrationTests {
+ class LoginAndSignUpControllerTest extends AbstractIntegrationTests {
     @Autowired
     private UserService userService;
 
@@ -33,6 +33,7 @@ public class LoginAndSignUpControllerTest extends AbstractIntegrationTests {
     @DynamicPropertySource
     protected static void propertyOverride(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", postgresContainer::getJdbcUrl);
+        registry.add("spring.data.mongodb.uri",mongoDbContainer::getReplicaSetUrl);
     }
 
     @Test

@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/user")
 @Log4j2
 class AuthController {
-    //TODO Refactor Mappings
     private final JwtAuthenticator jwtAuthenticator;
 
     public AuthController(JwtAuthenticator jwtAuthenticator) {
@@ -19,7 +18,7 @@ class AuthController {
     }
 
 
-    @PostMapping("/user")
+    @PostMapping("/login")
     ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest request) {
         LoginResponse loginResponse = jwtAuthenticator.authenticate(request);
         return ResponseEntity.ok(loginResponse);

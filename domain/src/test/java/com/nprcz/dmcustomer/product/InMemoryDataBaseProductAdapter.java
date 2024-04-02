@@ -11,14 +11,19 @@ class InMemoryDataBaseProductAdapter implements ProductDAOPort {
      private final Map<Integer,ProductDTO> productsDTOMap = new HashMap<>();
 
     @Override
-    public Integer save(ProductDTO productDTO) {
+    public String save(ProductDTO productDTO) {
         if (productDTO.productSKUId() == null){
             productDTO = productDTO.toBuilder().productSKUId(1).build();
         }
         if (productsDTOMap.containsKey(productDTO.productSKUId())) throw new ProductAlreadyExistsException(productDTO.productSKUId());
         productsDTOMap.put(productDTO.productSKUId(),productDTO);
-        return productDTO.productSKUId();
+        return productDTO.id();
 
+    }
+
+    @Override
+    public Integer deleteProduct(ProductDTO productDTO) {
+      return 1;
     }
 
     @Override

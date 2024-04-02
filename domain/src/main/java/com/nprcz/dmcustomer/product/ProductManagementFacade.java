@@ -6,30 +6,30 @@ import com.nprcz.dmcustomer.ports.out.product.ProductService;
 import java.util.List;
 
 public class ProductManagementFacade implements ProductService {
-    private final ProductDAOPort productDAOPort;
+    private final ProductDAOPort productDAO;
 
-    public ProductManagementFacade(ProductDAOPort productDAOPort) {
-        this.productDAOPort = productDAOPort;
+    public ProductManagementFacade(ProductDAOPort productDAO) {
+        this.productDAO = productDAO;
     }
 
     @Override
-    public Integer createProduct(ProductDTO productDTO) {
-        return productDAOPort.save(productDTO);
+    public String createProduct(ProductDTO productDTO) {
+        return productDAO.save(productDTO);
     }
 
     @Override
     public ProductDTO getProductBySKUId(Integer productSKUId) {
-        return productDAOPort.findProductBySKUId(productSKUId).orElseThrow(() -> new ProductNotFoundException(productSKUId));
+        return productDAO.findProductBySKUId(productSKUId).orElseThrow(() -> new ProductNotFoundException(productSKUId));
     }
 
     @Override
     public List<ProductDTO> getAllProducts() {
-        return productDAOPort.getAllProducts();
+        return productDAO.getAllProducts();
     }
 
     @Override
     public List<ProductDTO> getProductsByName(String productName) {
-        return productDAOPort.findProductsByName(productName);
+        return productDAO.findProductsByName(productName);
     }
 
 

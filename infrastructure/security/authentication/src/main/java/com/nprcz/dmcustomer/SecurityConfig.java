@@ -25,7 +25,7 @@ class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
-    private static final String[] WHITE_LIST_URL = {"/users/register"};
+    private static final String[] WHITE_LIST_URL = {"/users/register","/user/login","/product/{SKU}","/product","/product/find/{productName}"};
 
 
     @Bean
@@ -34,7 +34,7 @@ class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(WHITE_LIST_URL)
-                                .permitAll().requestMatchers("/login/user").permitAll()
+                                .permitAll()
                                 .anyRequest()
                                 .authenticated()
                 )
@@ -42,7 +42,7 @@ class SecurityConfig {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->
-                        logout.logoutUrl("/api/v1/auth/logout")
+                        logout.logoutUrl("/user/logout")
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 )

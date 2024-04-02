@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.function.Function;
 
 public interface ProductMapperInterface<T> extends Function<T,ProductDTO>, Serializable {
-    default ProductDTO toProductDTO(T t){
+    default ProductDTO mapToProductDTOFrom(T t){
         return apply(t);
     }
-    ProductDTO mapFrom(T t);
+    T fromProductDTO(ProductDTO productDTO);
 }

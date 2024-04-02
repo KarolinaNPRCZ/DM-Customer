@@ -13,16 +13,14 @@ import java.util.stream.Collectors;
 @Service
 class UserDTOMapper implements Function<User, UserDTO> {
 
-
-
     @Override
     public UserDTO apply(User user) {
-        return new UserDTO(
-                user.getId(),
-                user.getUserEmail(),
-                user.getUserPassword(),
-                getListOfUserRoles(user),
-                "token");
+        return  UserDTO.builder()
+                .userId(user.getId())
+                .email(user.getUserEmail())
+                .password(user.getUserPassword())
+                .roles(getListOfUserRoles(user))
+                .build();
     }
 
     UserDTO mapToDTO(User user) {
@@ -30,7 +28,14 @@ class UserDTOMapper implements Function<User, UserDTO> {
     }
 
     List<UserRoleDTO> getListOfUserRoles(User user) {
-        return user.getRoles().stream().map(userRole -> new UserRoleDTO(userRole.getName().name())).collect(Collectors.toList());
+        return user
+                .getRoles()
+                .stream()
+                .map(userRole -> new UserRoleDTO(userRole
+                                .getName()
+                                .name()))
+                .collect(Collectors.toList()
+                );
     }
 
 

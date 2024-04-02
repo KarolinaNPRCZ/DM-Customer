@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder(toBuilder = true)
-public record ProductDTO(Integer productSKUId,
+public record ProductDTO(String id,
+                         Integer productSKUId,
                          String productName,
                          Double productPrice,
                          String productDescription,

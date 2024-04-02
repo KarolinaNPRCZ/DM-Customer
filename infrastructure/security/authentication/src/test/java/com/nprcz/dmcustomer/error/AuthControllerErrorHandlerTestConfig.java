@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
-class AuthControllerErrorHandlerTestConfig {
+abstract class AuthControllerErrorHandlerTestConfig {
     @Bean
     TestController testController() {
         return new TestController();
