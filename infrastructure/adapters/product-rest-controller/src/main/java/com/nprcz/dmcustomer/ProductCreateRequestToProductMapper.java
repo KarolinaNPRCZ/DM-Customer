@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
                 .productPrice(productCreateRequest.productPrice)
                 .productDescription(productCreateRequest.productDescription)
                 .categories(productCreateRequest.categories)
+                .productQuantity(productCreateRequest.productQuantity)
                 .build();
     }
 
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Service;
                 .productSKUId(productDTO.productSKUId())
                 .productDescription(productDTO.productDescription())
                 .categories(productDTO.categories())
+                .productQuantity(productDTO.productQuantity())
                 .build();
     }
 }

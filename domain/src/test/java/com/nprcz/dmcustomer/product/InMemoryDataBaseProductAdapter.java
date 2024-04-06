@@ -3,7 +3,6 @@ package com.nprcz.dmcustomer.product;
 import com.nprcz.dmcustomer.ports.in.product.ProductDAOPort;
 
 import java.util.*;
-import org.apache.commons.lang3.StringUtils;
 
 import static org.apache.commons.lang3.StringUtils.containsIgnoreCase;
 
@@ -52,6 +51,18 @@ class InMemoryDataBaseProductAdapter implements ProductDAOPort {
     @Override
     public List<ProductDTO> getAllProducts() {
         return new ArrayList<>(productsDTOMap.values());
+    }
+
+    @Override
+    public Optional<ProductDTO> updateProductQuantityBySKUId(Integer productSKUId, Integer newQuantity) {
+
+        ProductDTO productDTO = productsDTOMap.get(productSKUId);
+        if (productDTO == null) throw new ProductNotFoundException(productSKUId);
+
+        ProductDTO  updatedProductDTO = productDTO.toBuilder().productQuantity(productDTO.productQuantity() + newQuantity).build();
+        productsDTOMap.put(productSKUId,updatedProductDTO);
+
+        return Optional.of(updatedProductDTO);
     }
 
 }

@@ -4,6 +4,7 @@ import com.nprcz.dmcustomer.ports.in.product.ProductDAOPort;
 import com.nprcz.dmcustomer.product.ProductAlreadyExistsException;
 import com.nprcz.dmcustomer.product.ProductDTO;
 import com.nprcz.dmcustomer.product.ProductMapperInterface;
+import com.nprcz.dmcustomer.product.ProductNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DuplicateKeyException;
 
@@ -27,10 +28,11 @@ class ProductDAOImpl implements ProductDAOPort {
     @Override
     public String save(ProductDTO productDTO) {
         ProductDocument productDocument = productDocumentMapper.fromProductDTO(productDTO);
-        log.info("productDocumentDAO try save product to database");
+        log.info("productDocumentDAO trying save product to database");
         ProductDocument savedProductDocument;
         try {
-            productDocument.setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS));
+            LocalDateTime createdAt = LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS);
+            productDocument.setCreatedAt(createdAt);
             savedProductDocument = productDocumentRepository.save(productDocument);
 
         } catch (
@@ -81,5 +83,26 @@ class ProductDAOImpl implements ProductDAOPort {
                 .toList();
         log.info("ProductDAO found products: " + productDTOSList.toString());
         return productDTOSList;
+    }
+
+    @Override
+    //TODO Refactor
+    public Optional<ProductDTO> updateProductQuantityBySKUId(Integer productSKUId, Integer newQuantity) {
+
+        log.info("ProductDAO trying to find product with SKU " + productSKUId);
+        ProductDocument productDocumentBeforeUpdate = productDocumentRepository
+                .getProductDocumentByProductSKUId(productSKUId)
+                .orElseThrow(() -> new ProductNotFoundException(productSKUId));
+
+        log.info("ProductDAO successfully find product with SKU " + productSKUId);
+        productDocumentBeforeUpdate.setProductQuantity(productDocumentBeforeUpdate.getProductQuantity() + newQuantity);
+        productDocumentBeforeUpdate.setUpdatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS));
+
+        log.info("ProductDAO trying save product after update");
+        ProductDocument updatedProductDocument = productDocumentRepository.save(productDocumentBeforeUpdate);
+
+        log.info("ProductDAO successfully save product after update");
+        ProductDTO productDTO = productDocumentMapper.mapToProductDTOFrom(updatedProductDocument);
+        return Optional.of(productDTO);
     }
 }

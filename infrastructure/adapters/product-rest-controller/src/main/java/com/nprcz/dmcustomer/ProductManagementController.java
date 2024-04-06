@@ -66,4 +66,18 @@ class ProductManagementController implements ProductManagementControllerPort<Res
 
         return ResponseEntity.ok(productDTO);
     }
+
+
+
+
+    @Override
+    @PutMapping("/update")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ProductDTO> updateProductQuantityBySKUId(@RequestParam Integer sku,
+                                                                       @RequestParam Integer quantity) {
+        log.info("Trying to update product quantity with SKU: {}...", sku);
+         ProductDTO productDTO = productService.updateProductQuantityBySKUId(sku,quantity);
+        log.info("Product has successfully updated: {}", productDTO);
+        return ResponseEntity.ok(productDTO);
+    }
 }

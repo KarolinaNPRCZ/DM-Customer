@@ -11,8 +11,6 @@ import java.util.Optional;
 interface ProductDocumentRepository extends MongoRepository<ProductDocument, String> {
     Optional<ProductDocument> getProductDocumentByProductSKUId(Integer productSKUId);
     List<ProductDocument> getProductDocumentsByProductNameContainsIgnoreCase(String productDocumentName);
-
     void deleteByProductSKUId(Integer id);
-
 
 }
