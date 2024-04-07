@@ -35,6 +35,12 @@
             <artifactId>userDAO-postgresSQL</artifactId>
             <version>1.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.nprcz.dmcustomer</groupId>
+            <artifactId>productDAO-mongoDB</artifactId>
+            <version>1.0</version>
+        </dependency>
         <dependency>
             <groupId>com.nprcz.dmcustomer</groupId>
             <artifactId>authentication</artifactId>
@@ -45,6 +51,11 @@
             <artifactId>user-rest-controller</artifactId>
             <version>${user-rest-controller.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.nprcz.dmcustomer</groupId>
+            <artifactId>product-rest-controller</artifactId>
+            <version>1.0</version>
+        </dependency>
         <!-- SPRING BOOT -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -53,6 +64,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
         <!-- INTEGRATION TESTS -->
         <dependency>
@@ -76,6 +91,11 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
     </dependencies>
 

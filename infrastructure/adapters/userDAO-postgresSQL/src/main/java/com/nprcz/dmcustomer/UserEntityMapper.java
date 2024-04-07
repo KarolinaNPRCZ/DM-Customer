@@ -14,7 +14,6 @@ import java.util.function.Function;
     @Override
     public User apply(UserDTO userDTO) {
         return new User(
-
                 userDTO.email(),
                 userDTO.password()
         );

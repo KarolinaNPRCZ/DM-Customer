@@ -41,7 +41,7 @@ class AuthControllerTest {
         );
 
         // WHEN
-        ResultActions resultActions = mockMvc.perform(post("/login/user")
+        ResultActions resultActions = mockMvc.perform(post("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(offerSaveRequest))
                 .characterEncoding(StandardCharsets.UTF_8));

@@ -17,7 +17,10 @@ public class UserLoginAndSignUpFacade implements UserService {
 
     @Override
     public Integer createUser(String userEmail, String password) throws UserAlreadyExistsException {
-        UserDTO userDTO = UserDTO.builder().email(userEmail).password(password).build();
+        UserDTO userDTO = UserDTO.builder()
+                .email(userEmail)
+                .password(password)
+                .build();
 
 
         return userDAOPort.save(userDTO);

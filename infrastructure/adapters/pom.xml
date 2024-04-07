@@ -17,6 +17,8 @@
     <modules>
         <module>userDAO-postgresSQL</module>
         <module>user-rest-controller</module>
+        <module>productDAO-mongoDB</module>
+        <module>product-rest-controller</module>
     </modules>
 
     <properties>

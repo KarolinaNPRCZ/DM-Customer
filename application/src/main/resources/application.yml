@@ -9,6 +9,11 @@ spring:
       hibernate:
         dialect:  org.hibernate.dialect.PostgreSQLDialect
         ddl-auto: update
+  data:
+    mongodb:
+      uri: mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@${MONGODB_HOSTNAME}:${MONGODB_PORT}/${MONGODB_NAME}?authSource=admin
+      auto-index-creation: true
+      authentication-database: admin
 
 
 
@@ -21,3 +26,10 @@ application:
       expiration-time-in-millis: 1209600000
       issuer: dm-customer-backend
 
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui-custom.html
+    operationsSorter: method

@@ -46,7 +46,7 @@ class AuthControllerErrorHandlerTest {
                 "nonexistentPassword"
         );
         // WHEN
-        ResultActions resultActions = mockMvc.perform(post("/login")
+        ResultActions resultActions = mockMvc.perform(post("/login-test1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(loginRequest)));
         String contentAsString = resultActions.andReturn()
@@ -71,7 +71,7 @@ class AuthControllerErrorHandlerTest {
                 "nonexistentPassword"
         );
         // WHEN
-        ResultActions resultActions = mockMvc.perform(post("/login")
+        ResultActions resultActions = mockMvc.perform(post("/login-test1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(loginRequest)));
         String contentAsString = resultActions.andReturn()
@@ -86,6 +86,31 @@ class AuthControllerErrorHandlerTest {
         // THEN
         assertThat(badCredentialsResponseDTO.errors())
                 .containsExactlyInAnyOrder("Wrong password");
+    }
+
+    @Test
+    void should_successfully_handle_InternalAuthenticationServiceException() throws Exception {
+        //GIVEN
+        LoginRequest loginRequest = new LoginRequest(
+                "testEmail",
+                "nonexistentPassword"
+        );
+        // WHEN
+        ResultActions resultActions = mockMvc.perform(post("/login-test2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(loginRequest)));
+        String contentAsString = resultActions.andReturn()
+                .getResponse()
+                .getContentAsString();
+        BadCredentialsResponseDTO badCredentialsResponseDTO = objectMapper
+                .readValue(
+                        contentAsString,
+                        BadCredentialsResponseDTO.class
+                );
+
+        // THEN
+        assertThat(badCredentialsResponseDTO.errors())
+                .containsExactlyInAnyOrder("Authentication failed");
     }
 
 }

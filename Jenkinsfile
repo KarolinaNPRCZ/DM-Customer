@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Build Maven') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/feature/004/Jenkins']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/KarolinaNPRCZ/DM-Customer']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/KarolinaNPRCZ/DM-Customer']]])
                 sh 'mvn install -DskipTests'
             }
         }
@@ -61,6 +61,6 @@ pipeline {
 
                      }
                  }
-             }
+      }
     }
 }

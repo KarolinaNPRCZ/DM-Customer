@@ -17,8 +17,14 @@ import java.util.ResourceBundle;
     private final String wrongEmailPatternMessage;
     private final String wrongPasswordMessage;
     private final String notEqualMessage;
+    private final String validationPositiveOrZero;
+    private final String validationDecimalMin;
+    private final String validationDecimalMax;
 
     public MessagesDTO() {
+        this.validationPositiveOrZero = getMessageFromProperties("validation.positive.or.zero");
+        this.validationDecimalMin = getMessageFromProperties("validation.decimal.min");
+        this.validationDecimalMax = getMessageFromProperties("validation.decimal.max");
         this.notNullMessage = getMessageFromProperties("not.null");
         this.notBlankMessage = getMessageFromProperties("not.blank");
         this.invalidTypeMessage = getMessageFromProperties("invalid.type");
