@@ -73,6 +73,7 @@ services:
 
     depends_on:
       - postgres
+      - mongodb
 
 volumes:
   pgdata: {}
