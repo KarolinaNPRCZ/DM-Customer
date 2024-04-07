@@ -1,9 +1,10 @@
 # DM-Customer APP
 
 <p align="center"><b>
-DM-Customer is a Spring Boot application that allows customers to place orders for paper products. The application is designed using the ports and adapters architectural pattern, enabling easy component exchange and integration with external systems. The aim of this project is to create an application where customers can browse available paper products, view their descriptions and prices. Registered users can place orders for selected paper products, specifying quantity and other order details.
-After starting the project, API documentation is available at this address:  
+DM-Customer is a Spring Boot application that allows customers to place orders for paper products. The application is designed using the ports and adapters architectural pattern, enabling easy component exchange and integration with external systems. The aim of this project is to create an application where customers can browse available paper products, view their descriptions and prices. Registered users can place orders for selected paper products, specifying quantity and other order details.  
 </b></p>
+
+### After starting the project, API documentation is available at this address:
 
 ## Diagram
 
@@ -11,7 +12,7 @@ After starting the project, API documentation is available at this address:
   <img src="DM-Customer.jpg"/>
 </p>
 
-## table
+## Table
 
 <p align="center"><b> table with mappings soon</b></p>
 
