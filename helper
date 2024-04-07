@@ -1,0 +1,5 @@
+"/products"
+ GET "/products/{sku}"
+  GET "/products"
+   GET "/products/search?"
+   "/products/{productId}/quantity"

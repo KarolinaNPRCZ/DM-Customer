@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 @Log4j2
 class ProductManagementController implements ProductManagementControllerPort<ResponseEntity<?>, ProductCreateRequest> {
 
@@ -26,7 +26,7 @@ class ProductManagementController implements ProductManagementControllerPort<Res
     }
 
     @Override
-    @PostMapping("/create")
+    @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> createProduct(@Valid @RequestBody ProductCreateRequest productCreateRequest) {
         log.info("Handle Request = ProductManagementController: createProduct method");
@@ -58,10 +58,10 @@ class ProductManagementController implements ProductManagementControllerPort<Res
 
 
     @Override
-    @GetMapping("/find/{productName}")
-    public ResponseEntity<List<ProductDTO>> getProductsByName(@PathVariable String productName) {
-        log.info("Trying to find product with name: {}...", productName);
-        List<ProductDTO> productDTO = productService.getProductsByName(productName);
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductDTO>> getProductsByName(@RequestParam String name) {
+        log.info("Trying to find product with name: {}...", name);
+        List<ProductDTO> productDTO = productService.getProductsByName(name);
         log.info("Product has successfully find: {}", productDTO);
 
         return ResponseEntity.ok(productDTO);
@@ -71,9 +71,9 @@ class ProductManagementController implements ProductManagementControllerPort<Res
 
 
     @Override
-    @PutMapping("/update")
+    @PutMapping("{sku}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<ProductDTO> updateProductQuantityBySKUId(@RequestParam Integer sku,
+    public ResponseEntity<ProductDTO> updateProductQuantityBySKUId(@PathVariable Integer sku,
                                                                        @RequestParam Integer quantity) {
         log.info("Trying to update product quantity with SKU: {}...", sku);
          ProductDTO productDTO = productService.updateProductQuantityBySKUId(sku,quantity);

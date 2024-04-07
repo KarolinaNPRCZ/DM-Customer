@@ -188,7 +188,7 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
     @Test
     void should_handle_BAD_REQUEST_caused_by_missing_parameters_of_product_create_request() throws Exception {
         // GIVEN && WHEN
-        ResultActions response = mockMvc.perform(post("/product/create")
+        ResultActions response = mockMvc.perform(post("/products")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"));
 
@@ -214,6 +214,10 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
                 jsonPath(
                         "$.errors[?(@.field=='categories')].messages[*]",
                         containsInAnyOrder(fieldMustBeNotNull)
+                ),
+                jsonPath(
+                        "$.errors[?(@.field=='productQuantity')].messages[*]",
+                        containsInAnyOrder(fieldMustBeNotNull)
                 )
         );
 
@@ -222,7 +226,7 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
     @Test
     void should_handle_BAD_REQUEST_caused_by_not_matches_productSKUId_of_product_register_request() throws Exception {
         // GIVEN && WHEN
-        ResultActions response = mockMvc.perform(post("/product/create")
+        ResultActions response = mockMvc.perform(post("/products")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                        {
@@ -230,7 +234,8 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
                         "name": "Premium A4 Copy Paper",
                         "price": 14.10,
                         "description": "High-quality A4 copy paper suitable for home and office use.",
-                        "categories": ["office", "stationery"]
+                        "categories": ["office", "stationery"],
+                        "quantity": 5
        
                        }
                             """.trim()));
@@ -247,7 +252,7 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
     @Test
     void should_handle_BAD_REQUEST_caused_by_not_matches_min_productPrice_of_product_register_request() throws Exception {
         // GIVEN && WHEN
-        ResultActions response = mockMvc.perform(post("/product/create")
+        ResultActions response = mockMvc.perform(post("/products")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                        {
@@ -255,7 +260,8 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
                         "name": "Premium A4 Copy Paper",
                         "price": -14.10,
                         "description": "High-quality A4 copy paper suitable for home and office use.",
-                        "categories": ["office", "stationery"]
+                        "categories": ["office", "stationery"],
+                        "quantity" : 5
        
                        }
                             """.trim()));
@@ -273,7 +279,7 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
     @Test
     void should_handle_BAD_REQUEST_caused_by_not_matches_max_productPrice_of_product_register_request() throws Exception {
         // GIVEN && WHEN
-        ResultActions response = mockMvc.perform(post("/product/create")
+        ResultActions response = mockMvc.perform(post("/products")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                        {
@@ -281,7 +287,8 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
                         "name": "Premium A4 Copy Paper",
                         "price": 14000.10,
                         "description": "High-quality A4 copy paper suitable for home and office use.",
-                        "categories": ["office", "stationery"]
+                        "categories": ["office", "stationery"],
+                        "quantity": 5
        
                        }
                             """.trim()));
@@ -295,5 +302,28 @@ class ApiControllerErrorHandlerTest extends AbstractIntegrationTests {
 
 
     }
-
+    @Test
+    void should_handle_BAD_REQUEST_caused_by_not_matches_quantity_of_product_register_request() throws Exception {
+        // GIVEN && WHEN
+        ResultActions response = mockMvc.perform(post("/products")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        {
+                         "sku": 2,
+                         "name": "Premium A4 Copy Paper",
+                         "price": 14.10,
+                         "description": "High-quality A4 copy paper suitable for home and office use.",
+                         "categories": ["office", "stationery"],
+                         "quantity" : -5
+                               
+                        }
+                             """.trim()));
+        // THEN
+        response.andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath(
+                        "$.errors[?(@.field=='productQuantity')].messages[*]",
+                        containsInAnyOrder(validationPositiveOrZero)
+                ));
+    }
 }

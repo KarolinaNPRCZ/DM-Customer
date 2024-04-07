@@ -49,7 +49,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
     void should_successfully_create_product_in_db() throws Exception {
 
         //GIVEN && WHEN
-        ResultActions resultActions = mockMvc.perform(post("/product/create").contentType(MediaType.APPLICATION_JSON).content(oneProductDocument().trim()));
+        ResultActions resultActions = mockMvc.perform(post("/products").contentType(MediaType.APPLICATION_JSON).content(oneProductDocument().trim()));
         String resultAsString = resultActions.andReturn().getResponse().getContentAsString();
         ProductDTO foundProduct = productService.getProductBySKUId(1);
         // THEN
@@ -62,6 +62,15 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
         });
 
     }
+    @Test
+    void should_return_access_denied_create_product_in_db() throws Exception {
+
+        //GIVEN && WHEN
+        ResultActions resultActions = mockMvc.perform(post("/products").contentType(MediaType.APPLICATION_JSON).content(oneProductDocument().trim()));
+        // THEN
+        assertThat(resultActions.andReturn().getResponse().getStatus()).isEqualTo(403);
+
+    }
 
     @Test
     @WithMockUser(authorities = "ADMIN")
@@ -69,7 +78,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
 
         // GIVEN && WHEN
         productService.createProduct(oneProductDocumentDTO());
-        ResultActions resultActions = mockMvc.perform(post("/product/create").contentType(MediaType.APPLICATION_JSON).content(oneProductDocument().trim()));
+        ResultActions resultActions = mockMvc.perform(post("/products").contentType(MediaType.APPLICATION_JSON).content(oneProductDocument().trim()));
 
         // THEN
         assertThat(resultActions.andReturn().getResponse().getStatus()).isEqualTo(409);
@@ -79,9 +88,9 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
     @Test
     void should_return_NOT_FOUND_caused_by_nonexistent_product_BySKUID() throws Exception {
         // GIVEN
-        int SKUId = 15;
+        int sku = 15;
         // WHEN
-        ResultActions resultActions = mockMvc.perform(get("/product/" + SKUId));
+        ResultActions resultActions = mockMvc.perform(get("/products/" + sku));
         // THEN
         assertThat(resultActions.andReturn().getResponse().getStatus()).isEqualTo(404);
     }
@@ -93,7 +102,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
 
         // WHEN
         String SKUIdSavedProduct = productService.createProduct(productDTO);
-        ResultActions resultActions = mockMvc.perform(get("/product/" + productDTO.productSKUId()));
+        ResultActions resultActions = mockMvc.perform(get("/products/" + productDTO.productSKUId()));
         String resultAsString = resultActions.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
         ProductDTO foundProduct = objectMapper.readValue(resultAsString, ProductDTO.class);
 
@@ -107,7 +116,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
     @Test
     void should_successfully_return_empty_array_because_of_empty_product_database() throws Exception {
         // GIVEN && WHEN
-        ResultActions resultActionWithEmptyDB = mockMvc.perform(get("/product"));
+        ResultActions resultActionWithEmptyDB = mockMvc.perform(get("/products"));
         String contentWithEmptyDB = resultActionWithEmptyDB.andReturn().getResponse().getContentAsString();
 
         // THEN
@@ -126,7 +135,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
         withID.forEach(productDTO -> productService.createProduct(productDTO));
 
         // WHEN
-        ResultActions resultAction = mockMvc.perform(get("/product"));
+        ResultActions resultAction = mockMvc.perform(get("/products"));
         String content = resultAction.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
         // THEN
@@ -138,7 +147,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
     @Test
     void should_successfully_return_empty_array_because_none_of_the_products_contain_given_productName() throws Exception {
         // GIVEN && WHEN
-        ResultActions resultActionWithEmptyDB = mockMvc.perform(get("/product/find/" + "none"));
+        ResultActions resultActionWithEmptyDB = mockMvc.perform(get("/products/search").param("name","non"));
         String contentWithEmptyDB = resultActionWithEmptyDB.andReturn().getResponse().getContentAsString();
 
         // THEN
@@ -157,7 +166,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
         withID.forEach(productDTO -> productService.createProduct(productDTO));
 
         // WHEN
-        ResultActions resultAction = mockMvc.perform(get("/product/find/" + "Copy"));
+        ResultActions resultAction = mockMvc.perform(get("/products/search").param("name","COPY"));
         String content = resultAction.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
         // THEN
@@ -178,7 +187,7 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
         // WHEN
         String productID=productService.createProduct(productDTO);
 
-        ResultActions resultActions = mockMvc.perform(put("/product/update").param("sku", String.valueOf(sku)).param("quantity", String.valueOf(quantity)).contentType(MediaType.APPLICATION_JSON));
+        ResultActions resultActions = mockMvc.perform(put("/products/"+sku).param("quantity",String.valueOf(quantity)).contentType(MediaType.APPLICATION_JSON));
 
 
         ProductDTO foundProduct = productService.getProductBySKUId(1);
@@ -197,7 +206,10 @@ class ProductManagementControllerIntegrationTest extends AbstractIntegrationTest
     @WithMockUser(authorities = "ADMIN")
     void should_return_NOT_FOUND_caused_by_nonexistent_product_BySKUID_in_updateQuantity_method() throws Exception {
         // GIVEN WHEN
-        ResultActions resultActions = mockMvc.perform(put("/product/update").param("sku", String.valueOf(57656)).param("quantity", String.valueOf(23)).contentType(MediaType.APPLICATION_JSON));
+        ResultActions resultActions = mockMvc
+                .perform(put("/products/"+123343)
+                        .param("quantity",String.valueOf(4))
+                        .contentType(MediaType.APPLICATION_JSON));
         // THEN
         assertThat(resultActions.andReturn().getResponse().getStatus()).isEqualTo(404);
     }

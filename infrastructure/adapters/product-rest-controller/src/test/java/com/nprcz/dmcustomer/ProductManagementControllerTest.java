@@ -48,7 +48,7 @@ class ProductManagementControllerTest {
                 .build()
                 ;
         //WHEN
-        ResultActions resultActions = getResultActions(post("/product/create"),objectMapper
+        ResultActions resultActions = getResultActions(post("/products"),objectMapper
                 .writeValueAsString(productCreateRequest));
         //THEN
         verify(productService, times(1)).createProduct(Mockito.any());
@@ -63,7 +63,7 @@ class ProductManagementControllerTest {
         //GIVEN
         int SKU = 1;
         //WHEN
-        ResultActions resultActions = mockMvc.perform(get("/product/" + SKU));
+        ResultActions resultActions = mockMvc.perform(get("/products/" + SKU));
 
         //THEN
         verify(productService, times(1)).getProductBySKUId(Mockito.any());
@@ -77,7 +77,7 @@ class ProductManagementControllerTest {
     void should_successfully_getProduct_by_invoking_getAllProducts_method_in_ProductService() throws Exception {
 
         //GIVEN && WHEN
-        ResultActions resultActions = mockMvc.perform(get("/product"));
+        ResultActions resultActions = mockMvc.perform(get("/products"));
 
         //THEN
         verify(productService, times(1)).getAllProducts();
@@ -93,7 +93,7 @@ class ProductManagementControllerTest {
         //GIVEN
         String productName = "test";
         // WHEN
-        ResultActions resultActions = getResultActions(get("/product/find/{}"),objectMapper
+        ResultActions resultActions = getResultActions(get("/products/search").param("name","COPY"),objectMapper
                 .writeValueAsString(productName));
 
 
@@ -115,9 +115,7 @@ class ProductManagementControllerTest {
         Integer quantity = 5;
         // WHEN
         ResultActions resultActions = mockMvc.perform(
-                put("/product/update")
-                        .param("sku", String.valueOf(sku))
-                        .param("quantity", String.valueOf(quantity))
+                put("/products/"+sku).param("quantity",String.valueOf(quantity))
         );
 
 
