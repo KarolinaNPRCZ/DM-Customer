@@ -4,12 +4,11 @@ import com.nprcz.dmcustomer.product.ProductDTO;
 
 import java.util.List;
 import java.util.Optional;
-//TODO delete product
 
 public interface ProductDAOPort {
     String save(ProductDTO productDTO);
 
-    Integer deleteProduct(ProductDTO productDTO);
+    void deleteProduct(ProductDTO productDTO);
 
     Optional<ProductDTO> findProductBySKUId(Integer SKUId);
 

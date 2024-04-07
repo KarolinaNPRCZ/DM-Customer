@@ -102,6 +102,21 @@ class ProductManagementFacadeTest implements SamplesProductsResponse {
                 () -> productManagementFacade.updateProductQuantityBySKUId(999999999,67));
     }
 
+    @Test
+    void should_throw_InvalidProductQuantityException_updateQuantityBySKUId() {
+
+        //GIVEN
+        int quantityBeforeUpdate = 5;
+        ProductDTO productDTO = oneProductDocumentDTO().toBuilder()
+                .productSKUId(1)
+                .productQuantity(quantityBeforeUpdate)
+                .build();
+        String UUID = productManagementFacade.createProduct(productDTO);
+        //WHEN && THEN
+        Assertions.assertThrows(InvalidProductQuantityException.class,
+                () -> productManagementFacade.updateProductQuantityBySKUId(1,-45));
+    }
+
 
 
 }

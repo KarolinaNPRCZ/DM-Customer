@@ -1,5 +1,6 @@
 package com.nprcz.dmcustomer;
 
+import com.nprcz.dmcustomer.product.InvalidProductQuantityException;
 import com.nprcz.dmcustomer.product.ProductAlreadyExistsException;
 import com.nprcz.dmcustomer.product.ProductDTO;
 import com.nprcz.dmcustomer.product.ProductNotFoundException;
@@ -128,7 +129,7 @@ class ProductDAOImplTest implements SamplesProductsResponse {
          productDAOImpl.deleteProduct(productDTO);
         //THEN
         verify(productDocumentRepository, times(1)).deleteByProductSKUId(productDTO.productSKUId());
-        verify(productDocumentMapper, times(1)).fromProductDTO(any());
+
 
 
     }
@@ -209,6 +210,20 @@ class ProductDAOImplTest implements SamplesProductsResponse {
         assertThrows(
                 ProductNotFoundException.class,
                 () -> productDAOImpl.updateProductQuantityBySKUId(1,any())
+        );
+    }
+    @Test
+    void should_return_InvalidProductQuantityException_updateQuantity() {
+        //GIVEN
+        ProductDocument productDocumentBeforeUpdate =  ProductDocument.builder()
+                .productQuantity(5)
+                .productSKUId(3)
+                .build();
+        when(productDocumentRepository.getProductDocumentByProductSKUId(3)).thenReturn(Optional.ofNullable(productDocumentBeforeUpdate));
+        //WHEN && THEN
+        assertThrows(
+                InvalidProductQuantityException.class,
+                () -> productDAOImpl.updateProductQuantityBySKUId(3,-10)
         );
     }
 }

@@ -21,8 +21,8 @@ class InMemoryDataBaseProductAdapter implements ProductDAOPort {
     }
 
     @Override
-    public Integer deleteProduct(ProductDTO productDTO) {
-      return 1;
+    public void deleteProduct(ProductDTO productDTO) {
+        productsDTOMap.remove(productDTO.productSKUId());
     }
 
     @Override
@@ -59,7 +59,11 @@ class InMemoryDataBaseProductAdapter implements ProductDAOPort {
         ProductDTO productDTO = productsDTOMap.get(productSKUId);
         if (productDTO == null) throw new ProductNotFoundException(productSKUId);
 
-        ProductDTO  updatedProductDTO = productDTO.toBuilder().productQuantity(productDTO.productQuantity() + newQuantity).build();
+        int productQuantityAfterUpdate = productDTO.productQuantity() + newQuantity;
+        if (productQuantityAfterUpdate<0) {
+            throw new InvalidProductQuantityException(productDTO.productQuantity());
+        }
+        ProductDTO  updatedProductDTO = productDTO.toBuilder().productQuantity(productQuantityAfterUpdate).build();
         productsDTOMap.put(productSKUId,updatedProductDTO);
 
         return Optional.of(updatedProductDTO);
