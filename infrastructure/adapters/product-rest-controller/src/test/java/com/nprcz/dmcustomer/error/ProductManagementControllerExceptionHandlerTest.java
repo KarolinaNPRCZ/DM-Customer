@@ -39,14 +39,14 @@ class ProductManagementControllerExceptionHandlerTest {
     void handle_UserEmailAlreadyExistsException_exception() throws Exception {
         //GIVEN && WHEN
         ResultActions resultActions = mockMvc.perform(post("/test/003"));
-        ProductAlreadyExistsResponse productAlreadyExistsResponse;
+        ProductExceptionsResponse productExceptionsResponse;
 
 
-        productAlreadyExistsResponse = getProductAlreadyExistsResponse(resultActions);
+        productExceptionsResponse = getProductAlreadyExistsResponse(resultActions);
 
         // THEN
-        assertThat(productAlreadyExistsResponse.httpStatus()).isEqualTo(HttpStatus.CONFLICT);
-        assertThat(productAlreadyExistsResponse.description()).isEqualTo("Product with SKU: 2 already exist");
+        assertThat(productExceptionsResponse.httpStatus()).isEqualTo(HttpStatus.CONFLICT);
+        assertThat(productExceptionsResponse.description()).isEqualTo("Product with SKU: 2 already exist");
 
     }
 
@@ -58,17 +58,30 @@ class ProductManagementControllerExceptionHandlerTest {
         ResultActions resultActions = mockMvc.perform(post("/test/004"));
 
 
-        ProductAlreadyExistsResponse productAlreadyExistsResponse = getProductAlreadyExistsResponse(resultActions);
+        ProductExceptionsResponse productExceptionsResponse = getProductAlreadyExistsResponse(resultActions);
 
         // THEN
-        assertThat(productAlreadyExistsResponse.httpStatus()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(productAlreadyExistsResponse.description()).isEqualTo("Product with SKU: 2 not found");
+        assertThat(productExceptionsResponse.httpStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(productExceptionsResponse.description()).isEqualTo("Product with SKU: 2 not found");
 
     }
-    private ProductAlreadyExistsResponse getProductAlreadyExistsResponse(ResultActions resultActions) throws UnsupportedEncodingException, JsonProcessingException {
+    @Test
+    void handle_InvalidProductQuantityException() throws Exception {
+        //GIVEN && WHEN
+        ResultActions resultActions = mockMvc.perform(post("/test/005"));
+
+
+        ProductExceptionsResponse productExceptionsResponse = getProductAlreadyExistsResponse(resultActions);
+
+        // THEN
+        assertThat(productExceptionsResponse.httpStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(productExceptionsResponse.description()).isEqualTo("Product quantity after update cannot be less than 0. Actual product quantity: 2");
+
+    }
+    private ProductExceptionsResponse getProductAlreadyExistsResponse(ResultActions resultActions) throws UnsupportedEncodingException, JsonProcessingException {
 
         String contentAsString = resultActions.andReturn().getResponse().getContentAsString();
-        return objectMapper.readValue(contentAsString, ProductAlreadyExistsResponse.class);
+        return objectMapper.readValue(contentAsString, ProductExceptionsResponse.class);
     }
 
 

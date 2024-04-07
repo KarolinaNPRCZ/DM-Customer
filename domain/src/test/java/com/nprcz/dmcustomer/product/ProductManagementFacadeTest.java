@@ -30,8 +30,8 @@ class ProductManagementFacadeTest implements SamplesProductsResponse {
     @Test
     void should_successfully_createProduct_and_return_ProductBySKUId() {
         //GIVEN
-        ProductDTO productDTO = oneProductDocumentDTO();
-        productDTO.toBuilder().productSKUId(19);
+        ProductDTO productDTO = oneProductDocumentDTO().toBuilder().productSKUId(19).productQuantity(5).build();
+        productDTO.toBuilder().productSKUId(19).build();
         //WHEN
         String UUID = productManagementFacade.createProduct(productDTO);
         ProductDTO recivedProductDTO = productManagementFacade.getProductBySKUId(productDTO.productSKUId());
@@ -77,6 +77,44 @@ class ProductManagementFacadeTest implements SamplesProductsResponse {
         // WHEN && THEN
         Assertions.assertThrows(ProductAlreadyExistsException.class,
                 () -> productManagementFacade.createProduct(productDTO));
+    }
+
+    @Test
+    void should_successfully_update_quantity_for_product() {
+        //GIVEN
+        int quantityBeforeUpdate = 5;
+        ProductDTO productDTO = oneProductDocumentDTO().toBuilder()
+                .productSKUId(19)
+                .productQuantity(quantityBeforeUpdate)
+                .build();
+        String UUID = productManagementFacade.createProduct(productDTO);
+
+        //WHEN
+        ProductDTO recivedProduct = productManagementFacade.updateProductQuantityBySKUId(productDTO.productSKUId(),5);
+        //THEN
+        assertTrue(recivedProduct.productQuantity() > quantityBeforeUpdate);
+    }
+
+    @Test
+    void should_throw_ProductNotFoundException_updateQuantityBySKUId() {
+        //GIVEN && WHEN && THEN
+        Assertions.assertThrows(ProductNotFoundException.class,
+                () -> productManagementFacade.updateProductQuantityBySKUId(999999999,67));
+    }
+
+    @Test
+    void should_throw_InvalidProductQuantityException_updateQuantityBySKUId() {
+
+        //GIVEN
+        int quantityBeforeUpdate = 5;
+        ProductDTO productDTO = oneProductDocumentDTO().toBuilder()
+                .productSKUId(1)
+                .productQuantity(quantityBeforeUpdate)
+                .build();
+        String UUID = productManagementFacade.createProduct(productDTO);
+        //WHEN && THEN
+        Assertions.assertThrows(InvalidProductQuantityException.class,
+                () -> productManagementFacade.updateProductQuantityBySKUId(1,-45));
     }
 
 

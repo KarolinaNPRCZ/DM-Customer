@@ -25,7 +25,16 @@ class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
-    private static final String[] WHITE_LIST_URL = {"/users/register","/user/login","/product/{SKU}","/product","/product/find/{productName}"};
+    private static final String[] WHITE_LIST_URL = {"/users/register",
+            "/user/login",
+            "/products/{SKU}",
+            "/products",
+            "/products/search/{name}",
+            "/api-docs",
+            "/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
+    };
 
 
     @Bean

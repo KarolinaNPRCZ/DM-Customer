@@ -2,7 +2,6 @@ package com.nprcz.dmcustomer;
 
 import com.nprcz.dmcustomer.utils.productutils.SamplesProductsResponse;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
@@ -13,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataMongoTest
 @ContextConfiguration(classes = ProductDocumentRepositoryTestConfig.class)
@@ -42,6 +42,24 @@ class ProductDocumentRepositoryTest implements SamplesProductsResponse {
         //THEN
         assertThat(optionalProductDocument).isPresent();
         assertThat(optionalProductDocument.get()).isEqualTo(productDocument);
+    }
+    @Test
+    void should_successfully_updated_quantity_updateQuantity() {
+        //GIVEN
+        ProductDocument productDocumentForSave = productDocument.toBuilder()
+                .productQuantity(6)
+                .productSKUId(16)
+                .build();
+        productDocumentRepository.save(productDocumentForSave);
+        ProductDocument recivedProductDocument = productDocumentRepository.getProductDocumentByProductSKUId(productDocumentForSave.productSKUId).orElseThrow();
+        recivedProductDocument.setProductQuantity(10);
+
+        //WHEN
+        ProductDocument optionalProductDocumentAfterUpdate = productDocumentRepository.save(recivedProductDocument);
+
+        //THEN
+        assertTrue(optionalProductDocumentAfterUpdate.productQuantity >productDocumentForSave.getProductQuantity());
+
 
 
     }

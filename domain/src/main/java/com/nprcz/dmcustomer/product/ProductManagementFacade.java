@@ -32,5 +32,10 @@ public class ProductManagementFacade implements ProductService {
         return productDAO.findProductsByName(productName);
     }
 
+    @Override
+    public ProductDTO updateProductQuantityBySKUId(Integer productSKUId, Integer newProductQuantity) {
+        return productDAO.updateProductQuantityBySKUId(productSKUId,newProductQuantity).orElseThrow(() -> new ProductNotFoundException(productSKUId));
+    }
+
 
 }

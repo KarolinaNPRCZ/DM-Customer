@@ -12,4 +12,6 @@ public interface ProductService {
     List<ProductDTO> getAllProducts();
 
     List<ProductDTO> getProductsByName(String productName);
+
+    ProductDTO updateProductQuantityBySKUId(Integer productSKUId, Integer newProductQuantity);
 }

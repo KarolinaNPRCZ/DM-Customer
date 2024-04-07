@@ -1,5 +1,6 @@
 package com.nprcz.dmcustomer.product;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 
 public class ProductComparator implements Comparator<ProductDTO> {
@@ -31,9 +32,28 @@ public class ProductComparator implements Comparator<ProductDTO> {
         int result = o2.categories().stream()
                 .mapToInt(s -> o2.categories().contains(s) ? o2.categories().get(o2.categories().indexOf(s)).compareTo(s) : 0)
                 .sum();
+
+        int productQuantity = o1.productQuantity().compareTo(o2.productQuantity());
+        if (productQuantity != 0) {
+            return productQuantity;
+        }
+        int createdAt = o1.createdAt().compareTo(o2.createdAt());
+        if (createdAt != 0) {
+            return createdAt;
+        }
+
+        int updatedAt = o1.updatedAt().compareTo(o2.updatedAt());
+        if (updatedAt != 0) {
+            return updatedAt;
+        }
+        int quantity = o1.productQuantity().compareTo(o2.productQuantity());
+        if (quantity != 0) {
+            return quantity;
+        }
         if (result != 0){
             return result;
         }
+
 
 
 

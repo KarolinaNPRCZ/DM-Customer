@@ -1,9 +1,7 @@
 package com.nprcz.dmcustomer;
 
 import com.nprcz.dmcustomer.ports.in.product.ProductDAOPort;
-import com.nprcz.dmcustomer.product.ProductAlreadyExistsException;
-import com.nprcz.dmcustomer.product.ProductDTO;
-import com.nprcz.dmcustomer.product.ProductMapperInterface;
+import com.nprcz.dmcustomer.product.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DuplicateKeyException;
 
@@ -27,27 +25,29 @@ class ProductDAOImpl implements ProductDAOPort {
     @Override
     public String save(ProductDTO productDTO) {
         ProductDocument productDocument = productDocumentMapper.fromProductDTO(productDTO);
-        log.info("productDocumentDAO try save product to database");
+
+        LocalDateTime createdAt = LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS);
+        productDocument.setCreatedAt(createdAt);
+
+        log.info("Trying to save product to database...");
+
         ProductDocument savedProductDocument;
         try {
-            productDocument.setCreatedAt(LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS));
             savedProductDocument = productDocumentRepository.save(productDocument);
-
-        } catch (
-                DuplicateKeyException exception) {
-            log.warn("productDocumentDAO filed save product to database");
-            throw new ProductAlreadyExistsException(productDocument.productSKUId);
+        } catch (DuplicateKeyException exception) {
+            log.warn("Failed to save product to database");
+            throw new ProductAlreadyExistsException(productDocument.getProductSKUId());
         }
-        log.info("productDocumentDAO save product to database");
-        return savedProductDocument.id;
+
+        log.info("Product saved to database successfully");
+        return savedProductDocument.getId();
     }
 
     @Override
-    public Integer deleteProduct(ProductDTO productDTO) {
-        ProductDocument productDocument = productDocumentMapper.fromProductDTO(productDTO);
-        productDocumentRepository.deleteByProductSKUId(productDocument.productSKUId);
+    public void deleteProduct(ProductDTO productDTO) {
+        productDocumentRepository.deleteByProductSKUId(productDTO.productSKUId());
         log.info("Product deleted successfully");
-        return productDocument.productSKUId;
+
     }
 
     @Override
@@ -81,5 +81,30 @@ class ProductDAOImpl implements ProductDAOPort {
                 .toList();
         log.info("ProductDAO found products: " + productDTOSList.toString());
         return productDTOSList;
+    }
+
+    @Override
+    public Optional<ProductDTO> updateProductQuantityBySKUId(Integer productSKUId, Integer newQuantity) {
+        log.info("Trying to find product with SKU: {}", productSKUId);
+        ProductDocument productDocumentBeforeUpdate = productDocumentRepository
+                .getProductDocumentByProductSKUId(productSKUId)
+                .orElseThrow(() -> new ProductNotFoundException(productSKUId));
+        log.info("Successfully found product with SKU: {}", productSKUId);
+
+        int updatedQuantity = productDocumentBeforeUpdate.getProductQuantity() + newQuantity;
+        if (updatedQuantity < 0) {
+            throw new InvalidProductQuantityException(productDocumentBeforeUpdate.productQuantity);
+        }
+        productDocumentBeforeUpdate.setProductQuantity(updatedQuantity);
+
+        LocalDateTime updatedAt = LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS);
+        productDocumentBeforeUpdate.setUpdatedAt(updatedAt);
+
+        log.info("Trying to save product after update");
+        ProductDocument updatedProductDocument = productDocumentRepository.save(productDocumentBeforeUpdate);
+        log.info("Successfully saved product after update");
+
+        ProductDTO updatedProductDTO = productDocumentMapper.mapToProductDTOFrom(updatedProductDocument);
+        return Optional.of(updatedProductDTO);
     }
 }

@@ -6,12 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
 @Builder(toBuilder = true)
-@Log4j2
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,5 +38,10 @@ class ProductCreateRequest {
     @NotNull(message = "{not.null}")
     @JsonProperty("categories")
     List<String> categories;
+
+    @NotNull(message = "{not.null}")
+    @JsonProperty("quantity")
+    @PositiveOrZero(message = "{validation.positive.or.zero}")
+    Integer productQuantity;
 
 }

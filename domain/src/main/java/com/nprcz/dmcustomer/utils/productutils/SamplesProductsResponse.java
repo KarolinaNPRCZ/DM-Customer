@@ -2,7 +2,6 @@ package com.nprcz.dmcustomer.utils.productutils;
 
 import com.nprcz.dmcustomer.product.ProductDTO;
 
-import javax.swing.event.ListDataEvent;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,7 +13,8 @@ public interface SamplesProductsResponse {
                     "name": "Premium A4 Copy Paper",
                     "price": 14.10,
                     "description": "High-quality A4 copy paper suitable for home and office use.",
-                    "categories": ["office", "stationery"]
+                    "categories": ["office", "stationery"],
+                    "quantity": 4
                 }
                 """.trim();
     }
@@ -27,6 +27,7 @@ public interface SamplesProductsResponse {
                 .productPrice(14.10)
                 .productDescription("High-quality A4 copy paper suitable for home and office use.")
                 .categories(List.of("office", "stationery"))
+                .productQuantity(4)
                 .createdAt(LocalDateTime.of(2024, 3, 11, 12, 10))
                 .updatedAt(LocalDateTime.of(2024, 3, 11, 12, 10).plusHours(24)).build();
 
