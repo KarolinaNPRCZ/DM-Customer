@@ -4,17 +4,32 @@
 DM-Customer is a Spring Boot application that allows customers to place orders for paper products. The application is designed using the ports and adapters architectural pattern, enabling easy component exchange and integration with external systems. The aim of this project is to create an application where customers can browse available paper products, view their descriptions and prices. Registered users can place orders for selected paper products, specifying quantity and other order details.  
 </b></p>
 
-### After starting the project, API documentation is available at this address:
+#### After starting the project, API documentation is available at this address:
 
 ## Diagram
 
 <p align="center">
-  <img src="DM-Customer.jpg"/>
+  <img src="DMCustomer.jpg"/>
 </p>
 
-## Table
-
-<p align="center"><b> table with mappings soon</b></p>
+## Mappings
+|       ENDPOINT        | METHOD  |         REQUEST          |       RESPONSE       |                    FUNCTION                     |
+|:---------------------:|:-------:|:------------------------:|:--------------------:|:-----------------------------------------------:|
+|   /products           |  POST   |  JSON BODY (product)     |   JSON (uuid)        | returns uuid after successfully create product  |
+|   /products           |  GET    |            -             |   JSON (products)    |             returns all products                |
+|   /products/{SKU}     |  GET    |  PATH VARIABLE (SKU)     |   JSON (product)     |        returns product with given sku           |
+|   /products/search?   |  GET    |  REQUEST PARAM (name)    |   JSON (proucts)     |       returns products with given name          |
+|   /products/{SKU}     |  PUT    |  PATH VARIABLE (SKU),    |   JSON (product)     |            update products quantity             |
+|                       |         |  REQUEST PARAM (name)    |                      |                                                 |
+|:---------------------:|:-------:|:------------------------:|:--------------------:|:-----------------------------------------------:|
+|   /users/register     |  POST   |  JSON BODY (user)        |   JSON (id)          |   returns id after successfully create user     |
+|   /users/{email}      |  GET    |  PATH VARIABLE (email)   |   JSON (user)        |          returns user with given email          |
+|   /user/login         |  GET    |  JSON BODY (credentials) |   JSON (TOKEN JWT)   |  returns token after successfully authorization |
+|:---------------------:|:-------:|:------------------------:|:--------------------:|:-----------------------------------------------:|
+|   /orders             |  POST   |  JSON BODY (order)       |   JSON (uuid)        | returns uuid after successfully create order    |
+|   /orders             |  GET    |            -             |   JSON (orders)      |             returns all orders                  |
+|   /orders/{id}        |  GET    |  PATH VARIABLE (id)      |   JSON (order)       |          returns order with given id            |
+|   /orders/{userId}    |  GET    |  REQUEST PARAM (userId)  |   JSON (orders)      |       returns orders with given user Id         |
 
 ## Tech STACK
 
@@ -74,7 +89,7 @@ Throughout the development of this project, I encountered various challenges and
   ```
  2. Go to the folder with cloned repository
  
-   Run the command:
+ 3. Run the command:
    ```
    mvn package -DskipTests
    ```
@@ -94,13 +109,19 @@ Throughout the development of this project, I encountered various challenges and
    ```
    docker-compose build
    ```
+   4. By using:
+
+   ```
+   docker images
+   ```
+  - You should see the image named as you set at services.dm-customer.image on file docker-compose.yml
 
 ## What I'm going to do in future
 There are many things that I'm going to do in this project in the future. Few of them:
 
 - Add order management required modules.
 
-- Store products in cache.
+- Store searched products in cache.
 
 - Fetch some papper products from external service.
 
