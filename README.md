@@ -22,7 +22,7 @@ DM-Customer is a Spring Boot application that allows customers to place orders f
 |   /products/{SKU}     |  PUT    |  PATH VARIABLE (SKU),    |   JSON (product)     |            update products quantity             |
 |                       |         |  REQUEST PARAM (name)    |                      |                                                 |
 
-|:---------------------:|:-------:|:------------------------:|:--------------------:|:-----------------------------------------------:|
+|                       |         |                          |                      |                                                 |
 |   /users/register     |  POST   |  JSON BODY (user)        |   JSON (id)          |   returns id after successfully create user     |
 |   /users/{email}      |  GET    |  PATH VARIABLE (email)   |   JSON (user)        |          returns user with given email          |
 |   /user/login         |  GET    |  JSON BODY (credentials) |   JSON (TOKEN JWT)   |  returns token after successfully authorization |
